@@ -5,7 +5,7 @@ import { Menu, X, User, Bell, Search, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export default function Header() {
+export default function BusinessHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -33,8 +33,8 @@ export default function Header() {
   }, [isMenuOpen]);
 
   const navigation = [
-    { name: 'Home', href: '/', current: true },
-    { name: 'Business', href: '/business', current: false },
+    { name: 'Home', href: '/', current: false },
+    { name: 'Business', href: '/business', current: true },
   ];
 
   return (

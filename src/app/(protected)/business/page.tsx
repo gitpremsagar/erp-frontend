@@ -1,7 +1,12 @@
-export default function BusinessManagementPage(){
+import BusinessHeader from "./_components/BusinessHeader";
+
+export default function BusinessManagementPage() {
     return (
         <div>
-            Business management page
+            <BusinessHeader />
+            <div className="flex flex-col gap-4">
+                this is business page
+            </div>
         </div>
     );
 }
