@@ -5,11 +5,11 @@ export default function Footer() {
 
   const footerLinks = {
     product: [
-      { name: 'Dashboard', href: '#' },
-      { name: 'Inventory Management', href: '#' },
-      { name: 'Sales & CRM', href: '#' },
-      { name: 'Financial Management', href: '#' },
-      { name: 'HR & Payroll', href: '#' },
+      { name: 'Namkeen', href: '#' },
+      { name: 'Sweets', href: '#' },
+      { name: 'Papad', href: '#' },
+      { name: 'Ready-to-Eat', href: '#' },
+      { name: 'Bulk Orders', href: '#' },
     ],
     support: [
       { name: 'Documentation', href: '#' },
@@ -41,27 +41,27 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <Building2 className="h-8 w-8 text-blue-400" />
-              <span className="text-xl font-bold">E-Digital ERP</span>
+              <Building2 className="h-8 w-8 text-orange-400" />
+              <span className="text-xl font-bold">Haldiram Distributor</span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
-              Comprehensive Enterprise Resource Planning solution designed to streamline your business operations, 
-              enhance productivity, and drive growth through integrated management systems.
+              Authorized distributor of Haldiram products, serving retailers, restaurants, and institutions 
+              with premium quality snacks, sweets, and ready-to-eat foods across the region.
             </p>
             
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-300">support@edigital-erp.com</span>
+                <Mail className="h-4 w-4 text-orange-400" />
+                <span className="text-gray-300">info@haldiramdistributor.com</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <Phone className="h-4 w-4 text-orange-400" />
+                <span className="text-gray-300">+91 98765 43210</span>
               </div>
               <div className="flex items-center space-x-3">
-                <MapPin className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-300">123 Business Ave, Tech City, TC 12345</span>
+                <MapPin className="h-4 w-4 text-orange-400" />
+                <span className="text-gray-300">123 Food Street, Market Area, City, State - 123456</span>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © {currentYear} E-Digital ERP. All rights reserved.
+              © {currentYear} Haldiram Distributor. All rights reserved.
             </div>
             
             {/* Social Links */}

@@ -34,8 +34,9 @@ export default function Header() {
 
   const navigation = [
     { name: 'Home', href: '/', current: true },
-    { name: 'Shop', href: '/shop', current: false },
+    { name: 'Products', href: '/products', current: false },
     { name: 'About', href: '/about', current: false },
+    { name: 'Contact', href: '/contact', current: false },
     { name: 'Admin', href: '/admin', current: false },
   ];
 
@@ -49,8 +50,8 @@ export default function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="flex items-center space-x-2">
-                <Building2 className="h-6 w-8 sm:h-8 sm:w-8 text-blue-600" />
-                <span className="text-lg sm:text-xl font-bold text-gray-900">E-Digital ERP</span>
+                <Building2 className="h-6 w-8 sm:h-8 sm:w-8 text-orange-600" />
+                <span className="text-lg sm:text-xl font-bold text-gray-900">Haldiram</span>
               </div>
             </div>
           </div>
@@ -95,8 +96,8 @@ export default function Header() {
             {/* User Menu */}
             <div className="flex items-center space-x-2">
               <div className="hidden md:block text-right">
-                <p className="text-sm font-medium text-gray-900">Admin User</p>
-                <p className="text-xs text-gray-500">admin@edigital.com</p>
+                <p className="text-sm font-medium text-gray-900">Customer</p>
+                <p className="text-xs text-gray-500">customer@haldiramdistributor.com</p>
               </div>
               <Button variant="ghost" size="sm" className="hidden sm:flex">
                 <User className="h-5 w-5 text-gray-600" />
@@ -164,7 +165,7 @@ export default function Header() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900">Admin User</p>
-                    <p className="text-xs text-gray-500">admin@edigital.com</p>
+                    <p className="text-xs text-gray-500">admin@haldiramdistributor.com</p>
                   </div>
                 </div>
               </div>
