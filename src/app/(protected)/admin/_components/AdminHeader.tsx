@@ -5,7 +5,7 @@ import { Menu, X, User, Bell, Search, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export default function BusinessHeader() {
+export default function AdminHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -34,7 +34,7 @@ export default function BusinessHeader() {
 
   const navigation = [
     { name: 'Home', href: '/', current: false },
-    { name: 'Business', href: '/business', current: true },
+    { name: 'Admin', href: '/admin', current: true },
   ];
 
   return (

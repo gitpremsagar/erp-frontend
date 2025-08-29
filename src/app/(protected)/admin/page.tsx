@@ -1,9 +1,9 @@
-import BusinessHeader from "./_components/BusinessHeader";
+import AdminHeader from "./_components/AdminHeader";
 
 export default function BusinessManagementPage() {
     return (
         <div>
-            <BusinessHeader />
+            <AdminHeader />
             <div className="flex flex-col gap-4">
                 this is business page
             </div>

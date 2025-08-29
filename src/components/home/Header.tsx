@@ -34,7 +34,9 @@ export default function Header() {
 
   const navigation = [
     { name: 'Home', href: '/', current: true },
-    { name: 'Business', href: '/business', current: false },
+    { name: 'Shop', href: '/shop', current: false },
+    { name: 'About', href: '/about', current: false },
+    { name: 'Admin', href: '/admin', current: false },
   ];
 
   return (
