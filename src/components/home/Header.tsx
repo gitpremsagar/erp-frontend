@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { useState, useEffect } from 'react';
 import { Menu, X, User, Bell, Search, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -50,7 +52,8 @@ export default function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="flex items-center space-x-2">
-                <Building2 className="h-6 w-8 sm:h-8 sm:w-8 text-orange-600" />
+                {/* <Building2 className="h-6 w-8 sm:h-8 sm:w-8 text-orange-600" /> */}
+                <Image src="/logo.jpeg" alt="logo.jpeg" width={100} height={100} />
                 <span className="text-lg sm:text-xl font-bold text-gray-900">Haldiram</span>
               </div>
             </div>
