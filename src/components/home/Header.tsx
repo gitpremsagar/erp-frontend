@@ -36,7 +36,8 @@ export default function Header() {
     { name: 'Home', href: '/', current: true },
     { name: 'Products', href: '/products', current: false },
     { name: 'About', href: '/about', current: false },
-    { name: 'Admin', href: '/admin', current: false },
+    { name: 'Login', href: '/log-in', current: false },
+    { name: 'Sign Up', href: '/sign-up', current: false },
   ];
 
   return (
