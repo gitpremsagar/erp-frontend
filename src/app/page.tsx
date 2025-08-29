@@ -207,10 +207,10 @@ export default function Home() {
                   About Our Distribution
                 </h2>
                 <p className="text-lg text-gray-600 mb-6">
-                  We are an authorized distributor of Haldiram products, serving the region with 
+                 {` We are an authorized distributor of Haldiram products, serving the region with 
                   authentic and high-quality food products. With years of experience in the food 
                   distribution industry, we understand the needs of our customers and provide 
-                  reliable service.
+                  reliable service.`}
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-center">
@@ -232,7 +232,7 @@ export default function Home() {
                   <Users className="h-16 w-16 text-orange-600 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Serving Since 2014</h3>
                   <p className="text-gray-600">
-                    Trusted by hundreds of businesses across the region for their Haldiram product needs.
+                    {`Trusted by hundreds of businesses across the region for their Haldiram product needs.`}
                   </p>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function Home() {
                 What Our Customers Say
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Don't just take our word for it. Here's what our valued customers have to say about our service.
+                {`Don't just take our word for it. Here's what our valued customers have to say about our service.`}
               </p>
             </div>
             
@@ -260,7 +260,7 @@ export default function Home() {
                       <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
                     ))}
                   </div>
-                  <p className="text-gray-700 mb-4">"{testimonial.content}"</p>
+                  <p className="text-gray-700 mb-4">{`"{testimonial.content}"`}</p>
                   <div>
                     <div className="font-semibold text-gray-900">{testimonial.name}</div>
                     <div className="text-sm text-gray-600">{testimonial.role}</div>
@@ -279,7 +279,7 @@ export default function Home() {
                 Get In Touch
               </h2>
               <p className="text-xl opacity-90 max-w-3xl mx-auto">
-                Ready to partner with us? Contact us today for bulk orders, pricing, and more information.
+                {`Ready to partner with us? Contact us today for bulk orders, pricing, and more information.`}
               </p>
             </div>
             
