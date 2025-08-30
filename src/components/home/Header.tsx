@@ -36,7 +36,7 @@ export default function Header() {
   }, [isMenuOpen]);
 
   const navigation = [
-    { name: "Home", href: "/", current: true },
+    { name: "Home", href: "/", current: false },
     { name: "Products", href: "/products", current: false },
     { name: "About", href: "/about", current: false },
   ];
