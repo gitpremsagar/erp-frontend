@@ -10,9 +10,9 @@ import {
   ShoppingCart, 
   BarChart3, 
   Settings, 
-  FileText,
+  // FileText
   Building2,
-  DollarSign,
+  // DollarSign
   Calendar
 } from 'lucide-react';
 import Link from 'next/link';
@@ -37,7 +37,7 @@ const navigation: NavItem[] = [
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
-export default function Sidebar() {
+export default function AdminSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
 

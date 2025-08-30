@@ -1,5 +1,5 @@
 import AdminHeader from "./_components/AdminHeader";
-import Sidebar from "./_components/Sidebar";
+import AdminSidebar from "./_components/AdminSidebar";
 import DashboardHeader from "./_components/DashboardHeader";
 import StatsGrid from "./_components/StatsGrid";
 import QuickActionsGrid from "./_components/QuickActionsGrid";
@@ -15,7 +15,7 @@ export default function BusinessManagementPage() {
             
             <div className="flex h-[calc(100vh-64px)]">
                 {/* Sidebar */}
-                <Sidebar />
+                <AdminSidebar />
                 
                 {/* Main Content */}
                 <div className="flex-1 overflow-auto">
