@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, User, Bell, Search, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AdminHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,8 +48,8 @@ export default function AdminHeader() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="flex items-center space-x-2">
-                <Building2 className="h-6 w-8 sm:h-8 sm:w-8 text-blue-600" />
-                <span className="text-lg sm:text-xl font-bold text-gray-900">E-Digital ERP</span>
+                <Image src="/logo.jpeg" alt="Logo" width={32} height={32} />
+                <span className="text-lg sm:text-xl font-bold text-gray-900">Sri Gopal Traders</span>
               </div>
             </div>
           </div>
