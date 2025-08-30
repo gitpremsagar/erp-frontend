@@ -93,18 +93,18 @@ export default function Home() {
       <Header />
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-r from-orange-600 to-red-600 text-white">
+        <section className="relative bg-primary text-white">
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
             <div className="text-center">
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                Authorized Haldiram Distributor
+                Sri Gopal Traders
               </h1>
               <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
                 Your trusted partner for authentic Haldiram products. Serving retailers, restaurants, 
                 and institutions with premium quality snacks, sweets, and ready-to-eat foods.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="bg-white text-orange-600 hover:bg-gray-100">
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   Order Now
@@ -113,7 +113,7 @@ export default function Home() {
                   <Phone className="mr-2 h-5 w-5" />
                   Contact Us
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
@@ -123,19 +123,19 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
-                <div className="text-3xl md:text-4xl font-bold text-orange-600 mb-2">500+</div>
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">500+</div>
                 <div className="text-gray-600">Happy Clients</div>
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-bold text-orange-600 mb-2">50+</div>
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">50+</div>
                 <div className="text-gray-600">Product Varieties</div>
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-bold text-orange-600 mb-2">10+</div>
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">10+</div>
                 <div className="text-gray-600">Years Experience</div>
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-bold text-orange-600 mb-2">24/7</div>
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">24/7</div>
                 <div className="text-gray-600">Customer Support</div>
               </div>
             </div>
@@ -158,11 +158,11 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {products.map((product, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="h-48 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
-                    <Package className="h-16 w-16 text-orange-600" />
+                  <div className="h-48 bg-primary flex items-center justify-center">
+                    <Package className="h-16 w-16 text-white" />
                   </div>
                   <div className="p-6">
-                    <div className="text-sm text-orange-600 font-medium mb-2">{product.category}</div>
+                    <div className="text-sm text-primary font-medium mb-2">{product.category}</div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
                     <p className="text-gray-600 text-sm">{product.description}</p>
                   </div>
@@ -187,8 +187,8 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {services.map((service, index) => (
                 <div key={index} className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
-                    <service.icon className="h-8 w-8 text-orange-600" />
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
+                    <service.icon className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
                   <p className="text-gray-600">{service.description}</p>
@@ -214,24 +214,24 @@ export default function Home() {
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-center">
-                    <Award className="h-5 w-5 text-orange-600 mr-3" />
+                    <Award className="h-5 w-5 text-primary mr-3" />
                     <span className="text-gray-700">Authorized Haldiram Distributor</span>
                   </div>
                   <div className="flex items-center">
-                    <Heart className="h-5 w-5 text-orange-600 mr-3" />
+                    <Heart className="h-5 w-5 text-primary mr-3" />
                     <span className="text-gray-700">Customer-Focused Service</span>
                   </div>
                   <div className="flex items-center">
-                    <Shield className="h-5 w-5 text-orange-600 mr-3" />
+                    <Shield className="h-5 w-5 text-primary mr-3" />
                     <span className="text-gray-700">Quality Guaranteed Products</span>
                   </div>
                 </div>
               </div>
-              <div className="bg-gradient-to-br from-orange-100 to-red-100 rounded-lg p-8">
+              <div className="bg-primary rounded-lg p-8">
                 <div className="text-center">
-                  <Users className="h-16 w-16 text-orange-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Serving Since 2014</h3>
-                  <p className="text-gray-600">
+                  <Users className="h-16 w-16 text-white mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-yellow-300 mb-2">Serving Since 2014</h3>
+                  <p className="text-white">
                     {`Trusted by hundreds of businesses across the region for their Haldiram product needs.`}
                   </p>
                 </div>
@@ -272,7 +272,7 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section className="py-16 bg-orange-600 text-white">
+        <section className="py-16 bg-primary text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -305,7 +305,7 @@ export default function Home() {
             </div>
             
             <div className="text-center mt-12">
-              <Button size="lg" className="bg-white text-orange-600 hover:bg-gray-100">
+              <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 <Mail className="mr-2 h-5 w-5" />
                 Send Message
               </Button>
