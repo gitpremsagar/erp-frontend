@@ -13,7 +13,8 @@ import {
   // FileText
   Building2,
   // DollarSign
-  Calendar
+  Calendar,
+  MessageCircle
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -30,7 +31,7 @@ const navigation: NavItem[] = [
   { name: 'Dashboard', href: '/admin', icon: Home },
   { name: 'Stock', href: '/admin/stock', icon: Package },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-  { name: 'Chat', href: '/admin/chat', icon: Building2 },
+  { name: 'Chat', href: '/admin/chat', icon: MessageCircle },
   { name: 'Reports', href: '/admin/reports', icon: BarChart3 },
   { name: 'Customers', href: '/admin/customers', icon: Users },
   { name: 'Notifications', href: '/admin/notifications', icon: Calendar },
