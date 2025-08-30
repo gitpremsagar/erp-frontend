@@ -248,7 +248,7 @@ export default function ProductsPage() {
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 w-64"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary w-64"
                 />
               </div>
             </div>
@@ -269,7 +269,7 @@ export default function ProductsPage() {
                     onClick={() => setSelectedCategory(category.id)}
                     className={`px-3 py-1 text-sm rounded-full transition-colors ${
                       selectedCategory === category.id
-                        ? 'bg-orange-600 text-white'
+                        ? 'bg-primary text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
@@ -283,7 +283,7 @@ export default function ProductsPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                className="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-primary"
               >
                 {sortOptions.map((option) => (
                   <option key={option.id} value={option.id}>
@@ -313,8 +313,8 @@ export default function ProductsPage() {
               >
                 {/* Product Image */}
                 <div className="relative aspect-square bg-gray-100">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
-                    <Package className="w-16 h-16 text-orange-400" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                    <Package className="w-16 h-16 text-primary" />
                   </div>
                   {product.isNew && (
                     <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
@@ -322,7 +322,7 @@ export default function ProductsPage() {
                     </div>
                   )}
                   {product.isFeatured && (
-                    <div className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                    <div className="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">
                       Featured
                     </div>
                   )}
@@ -334,7 +334,7 @@ export default function ProductsPage() {
                 {/* Product Info */}
                 <div className="p-4">
                   <div className="mb-2">
-                    <span className="text-xs font-medium text-orange-600 uppercase tracking-wide">
+                    <span className="text-xs font-medium text-primary uppercase tracking-wide">
                       {product.category}
                     </span>
                   </div>
@@ -426,29 +426,29 @@ export default function ProductsPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-6 h-6 text-orange-600" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Quality Assured</h3>
               <p className="text-sm text-gray-600">All products meet Haldiram&apos;s strict quality standards</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Truck className="w-6 h-6 text-orange-600" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <Truck className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Fast Delivery</h3>
               <p className="text-sm text-gray-600">Quick and efficient delivery across the region</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Package className="w-6 h-6 text-orange-600" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <Package className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Genuine Products</h3>
               <p className="text-sm text-gray-600">100% authentic Haldiram products with warranty</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-6 h-6 text-orange-600" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">24/7 Support</h3>
               <p className="text-sm text-gray-600">Round the clock customer support for your queries</p>

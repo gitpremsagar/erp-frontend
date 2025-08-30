@@ -93,7 +93,7 @@ export default function About() {
       <Header />
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-r from-orange-600 to-red-600 text-white">
+        <section className="relative bg-primary text-white">
           <div className="absolute inset-0 bg-black opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
             <div className="text-center">
@@ -104,10 +104,10 @@ export default function About() {
                 Your trusted partner for authentic Haldiram products with over a decade of excellence in distribution
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="secondary" className="text-orange-600">
+                <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                   Our Story
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-orange-600">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
                   Contact Us
                 </Button>
               </div>
@@ -141,8 +141,8 @@ export default function About() {
                 </div>
               </div>
               <div className="relative">
-                <div className="bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl p-8">
-                  <Building2 className="h-24 w-24 text-orange-600 mx-auto mb-6" />
+                <div className="bg-gradient-to-br from-primary/10 to-primary/20 rounded-2xl p-8">
+                  <Building2 className="h-24 w-24 text-primary mx-auto mb-6" />
                   <h3 className="text-2xl font-bold text-gray-900 text-center mb-4">
                     Trusted by 500+ Businesses
                   </h3>
@@ -168,16 +168,16 @@ export default function About() {
             </div>
             
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8">
-                <Target className="h-16 w-16 text-blue-600 mb-6" />
+              <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8">
+                <Target className="h-16 w-16 text-primary mb-6" />
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
                 <p className="text-gray-700">
                   To provide authentic Haldiram products with exceptional service, ensuring customer satisfaction through reliable delivery, competitive pricing, and unwavering commitment to quality standards.
                 </p>
               </div>
               
-              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8">
-                <Star className="h-16 w-16 text-green-600 mb-6" />
+              <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8">
+                <Star className="h-16 w-16 text-primary mb-6" />
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
                 <p className="text-gray-700">
                   To become the leading distributor of Haldiram products in our region, known for excellence in service, innovation in delivery, and commitment to building lasting customer relationships.
@@ -203,7 +203,7 @@ export default function About() {
               {values.map((value, index) => (
                 <div key={index} className="text-center">
                   <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <value.icon className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+                    <value.icon className="h-12 w-12 text-primary mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
                     <p className="text-gray-600">{value.description}</p>
                   </div>
@@ -228,8 +228,8 @@ export default function About() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {milestones.map((milestone, index) => (
                 <div key={index} className="text-center">
-                  <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6">
-                    <div className="text-3xl font-bold text-orange-600 mb-3">{milestone.year}</div>
+                  <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6">
+                    <div className="text-3xl font-bold text-primary mb-3">{milestone.year}</div>
                     <h3 className="text-xl font-bold text-gray-900 mb-3">{milestone.title}</h3>
                     <p className="text-gray-600">{milestone.description}</p>
                   </div>
@@ -255,11 +255,11 @@ export default function About() {
               {team.map((member, index) => (
                 <div key={index} className="text-center">
                   <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div className="h-20 w-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <div className="h-20 w-20 bg-gradient-to-br from-primary to-primary/80 rounded-full mx-auto mb-4 flex items-center justify-center">
                       <Users className="h-10 w-10 text-white" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                    <p className="text-orange-600 font-semibold mb-3">{member.role}</p>
+                    <p className="text-primary font-semibold mb-3">{member.role}</p>
                     <p className="text-gray-600 text-sm">{member.description}</p>
                   </div>
                 </div>
@@ -269,7 +269,7 @@ export default function About() {
         </section>
 
         {/* Contact CTA */}
-        <section className="py-16 lg:py-24 bg-gradient-to-r from-orange-600 to-red-600 text-white">
+        <section className="py-16 lg:py-24 bg-primary text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
               Ready to Partner With Us?
@@ -278,11 +278,11 @@ export default function About() {
               Get in touch with our team to discuss your Haldiram product requirements and discover how we can serve you better.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="text-orange-600">
+              <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 <Phone className="h-5 w-5 mr-2" />
                 Call Us Now
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-orange-600">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
                 <Mail className="h-5 w-5 mr-2" />
                 Send Email
               </Button>
