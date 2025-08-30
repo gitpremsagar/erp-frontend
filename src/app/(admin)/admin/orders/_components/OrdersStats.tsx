@@ -35,7 +35,7 @@ const stats = [
   },
   {
     name: 'Total Revenue',
-    value: '$45,678',
+    value: '₹45,678',
     change: '+18%',
     changeType: 'positive',
     icon: DollarSign,
