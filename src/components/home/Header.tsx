@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 
-import { useState, useEffect } from 'react';
-import { Menu, X, User, Bell, Search, Building2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import { Menu, X, User, Bell, Search, Building2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -17,35 +18,35 @@ export default function Header() {
       setIsScrolled(window.scrollY > 0);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      if (isMenuOpen && !target.closest('.mobile-menu')) {
+      if (isMenuOpen && !target.closest(".mobile-menu")) {
         setIsMenuOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
 
   const navigation = [
-    { name: 'Home', href: '/', current: true },
-    { name: 'Products', href: '/products', current: false },
-    { name: 'About', href: '/about', current: false },
-    { name: 'Login', href: '/log-in', current: false },
-    { name: 'Sign Up', href: '/sign-up', current: false },
+    { name: "Home", href: "/", current: true },
+    { name: "Products", href: "/products", current: false },
+    { name: "About", href: "/about", current: false },
   ];
 
   return (
-    <header className={`bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'shadow-lg' : 'shadow-sm'
-    }`}>
+    <header
+      className={`bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled ? "shadow-lg" : "shadow-sm"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
@@ -53,8 +54,15 @@ export default function Header() {
             <div className="flex-shrink-0">
               <div className="flex items-center space-x-2">
                 {/* <Building2 className="h-6 w-8 sm:h-8 sm:w-8 text-orange-600" /> */}
-                <Image src="/logo.jpeg" alt="logo.jpeg" width={100} height={100} />
-                <span className="text-lg sm:text-xl font-bold text-gray-900">Haldiram</span>
+                <Image
+                  src="/logo.jpeg"
+                  alt="logo.jpeg"
+                  width={50}
+                  height={50}
+                />
+                <span className="text-lg sm:text-xl font-bold text-gray-900">
+                  SGT
+                </span>
               </div>
             </div>
           </div>
@@ -62,17 +70,12 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-6 xl:space-x-8">
             {navigation.map((item) => (
-              <Link
+              <NavTab
                 key={item.name}
+                name={item.name}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  item.current
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                }`}
-              >
-                {item.name}
-              </Link>
+                current={item.current}
+              />
             ))}
           </nav>
 
@@ -90,22 +93,39 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Notifications - Hidden on small screens */}
-            <Button variant="ghost" size="sm" className="relative hidden sm:flex">
-              <Bell className="h-5 w-5 text-gray-600" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
-            </Button>
-
-            {/* User Menu */}
-            <div className="flex items-center space-x-2">
-              <div className="hidden md:block text-right">
-                <p className="text-sm font-medium text-gray-900">Customer</p>
-                <p className="text-xs text-gray-500">customer@haldiramdistributor.com</p>
-              </div>
-              <Button variant="ghost" size="sm" className="hidden sm:flex">
-                <User className="h-5 w-5 text-gray-600" />
-              </Button>
-            </div>
+            {/* Logged In User */}
+            {isLoggedIn ? (
+              <>
+                {/* {/* Notifications - Hidden on small screens */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="relative hidden sm:flex"
+                >
+                  <Bell className="h-5 w-5 text-gray-600" />
+                  <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                </Button>
+                {/* User Menu */}
+                <div className="flex items-center space-x-2">
+                  <div className="hidden md:block text-right">
+                    <p className="text-sm font-medium text-gray-900">
+                      Customer
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      customer@haldiramdistributor.com
+                    </p>
+                  </div>
+                  <Button variant="ghost" size="sm" className="hidden sm:flex">
+                    <User className="h-5 w-5 text-gray-600" />
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                 <NavTab name="Login" href="/log-in" current={false} />
+                 <NavTab name="Sign Up" href="/sign-up" current={false} />
+              </>
+            )}
 
             {/* Mobile menu button */}
             <div className="lg:hidden">
@@ -149,8 +169,8 @@ export default function Header() {
                   href={item.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     item.current
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -167,8 +187,12 @@ export default function Header() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Admin User</p>
-                    <p className="text-xs text-gray-500">admin@haldiramdistributor.com</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Admin User
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      admin@haldiramdistributor.com
+                    </p>
                   </div>
                 </div>
               </div>
@@ -188,3 +212,26 @@ export default function Header() {
     </header>
   );
 }
+
+const NavTab = ({
+  href,
+  name,
+  current,
+}: {
+  href: string;
+  name: string;
+  current: boolean;
+}) => {
+  return (
+    <Link
+      href={href}
+      className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+        current
+          ? "text-blue-600 bg-blue-50"
+          : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+      }`}
+    >
+      {name}
+    </Link>
+  );
+};
