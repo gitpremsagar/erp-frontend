@@ -30,8 +30,9 @@ export default function SignUpPage() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
+                            {/* First Name */}
                             <div className="space-y-2">
-                                <Label htmlFor="firstName">First Name</Label>
+                                <Label htmlFor="firstName">Name</Label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                                     <Input
@@ -42,7 +43,8 @@ export default function SignUpPage() {
                                     />
                                 </div>
                             </div>
-                            <div className="space-y-2">
+                            {/* Last Name */}
+                            {/* <div className="space-y-2">
                                 <Label htmlFor="lastName">Last Name</Label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -53,7 +55,7 @@ export default function SignUpPage() {
                                         className="pl-10 focus:ring-primary focus:border-primary"
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         
                         <div className="space-y-2">

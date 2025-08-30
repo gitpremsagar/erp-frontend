@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -68,9 +69,9 @@ export default function LogInPage() {
                                 />
                                 <Label htmlFor="remember" className="text-sm">Remember me</Label>
                             </div>
-                            <a href="#" className="text-sm text-primary hover:underline">
+                            {/* <a href="#" className="text-sm text-primary hover:underline">
                                 Forgot password?
-                            </a>
+                            </a> */}
                         </div>
                         
                         <Button className="w-full bg-primary hover:bg-primary/90">
