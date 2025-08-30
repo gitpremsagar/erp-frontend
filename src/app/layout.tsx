@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ERP - Welcome to ERP System",
-  description: "ERP System",
+  title: "Sri Gopal Traders",
+  description: "Sri Gopal Traders  Haldiram's Super Stockiest",
 };
 
 export default function RootLayout({
