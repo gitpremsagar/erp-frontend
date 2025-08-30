@@ -37,7 +37,7 @@ export const stats = [
         change: "+8%",
         icon: ShoppingCart,
         color: "text-orange-600"
-    }
+    },
 ];
 
 export const quickActions = [

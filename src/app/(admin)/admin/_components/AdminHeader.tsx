@@ -35,7 +35,6 @@ export default function AdminHeader() {
 
   const navigation = [
     { name: 'Home', href: '/', current: false },
-    { name: 'Admin', href: '/admin', current: true },
   ];
 
   return (

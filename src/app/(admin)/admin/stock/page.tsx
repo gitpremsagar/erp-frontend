@@ -13,7 +13,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 
-export default function Inventory() {
+export default function StockPage() {
   const inventoryItems = [
     {
       id: 1,
