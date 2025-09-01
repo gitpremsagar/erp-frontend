@@ -40,7 +40,6 @@ export default function StocksTable({ data }: StocksTableProps) {
           </button>
         ),
         cell: ({ getValue }) => (
-
           <span className="text-sm font-medium">₹{Number(getValue() as number).toLocaleString('en-IN')}</span>
         ),
       },
