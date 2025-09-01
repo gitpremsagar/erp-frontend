@@ -13,10 +13,10 @@ export default function Footer() {
     ],
     support: [
       { name: 'Documentation', href: '#' },
-      { name: 'Help Center', href: '#' },
       { name: 'Contact Support', href: '#' },
       { name: 'Training Videos', href: '#' },
       { name: 'API Reference', href: '#' },
+      { name: 'Admin', href: '/admin' },
     ],
     company: [
       { name: 'About Us', href: '#' },

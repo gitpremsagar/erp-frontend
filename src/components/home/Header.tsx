@@ -123,7 +123,7 @@ export default function Header() {
             ) : (
               <>
                  <NavTab name="Login" href="/log-in" current={false} />
-                 <NavTab name="Sign Up" href="/sign-up" current={false} />
+                 {/* <NavTab name="Sign Up" href="/sign-up" current={false} /> */}
               </>
             )}
 

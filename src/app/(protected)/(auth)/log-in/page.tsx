@@ -153,14 +153,15 @@ export default function SignInForm() {
               )}
             </Button>
             
-            <div className="flex justify-start items-center gap-2">
+            {/* Sign up link */}
+            {/* <div className="flex justify-start items-center gap-2">
               <span className="text-sm text-gray-500">
                 Don&apos;t have an account?
               </span>
               <Link href="/sign-up" className="text-blue-500 hover:text-blue-700">
                 Sign up
               </Link>
-            </div>
+            </div> */}
           </form>
         </Form>
       </div>
