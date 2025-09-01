@@ -15,6 +15,7 @@ import { ProductRow } from './mockData';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowUpDown, MoreHorizontal, Package, AlertTriangle } from 'lucide-react';
+import Image from 'next/image';
 
 interface StocksTableProps {
   data: ProductRow[];
@@ -26,6 +27,23 @@ export default function StocksTable({ data }: StocksTableProps) {
 
   const columns = React.useMemo<ColumnDef<ProductRow>[]>(
     () => [
+      {
+        accessorKey: 'mrp',
+        header: ({ column }) => (
+          <button
+            className="flex items-center gap-1"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            {/* MRP */}
+            MRP
+            <ArrowUpDown className="w-4 h-4 text-gray-400" />
+          </button>
+        ),
+        cell: ({ getValue }) => (
+
+          <span className="text-sm font-medium">₹{Number(getValue() as number).toLocaleString('en-IN')}</span>
+        ),
+      },
       {
         accessorKey: 'name',
         header: ({ column }) => (
@@ -41,9 +59,15 @@ export default function StocksTable({ data }: StocksTableProps) {
           const p = row.original;
           return (
             <div className="flex items-center gap-3">
-              <img src={p.imageUrl} alt={p.name} className="w-10 h-10 rounded object-cover" />
+              {/* Product Image */}
+              {/* <Image src={p.imageUrl} alt={p.name} className="w-10 h-10 rounded object-cover"
+                width={40}
+                height={40}
+              /> */}
               <div>
+                {/* Product Name */}
                 <div className="text-sm font-medium text-gray-900">{p.name}</div>
+                {/* Product Code */}
                 <div className="text-xs text-gray-500">{p.productCode}</div>
               </div>
             </div>
@@ -55,25 +79,12 @@ export default function StocksTable({ data }: StocksTableProps) {
         header: 'Category',
         cell: ({ row }) => (
           <div className="text-sm text-gray-900">
+            {/* Category */}
             {row.original.category} / {row.original.group}
           </div>
         ),
       },
-      {
-        accessorKey: 'mrp',
-        header: ({ column }) => (
-          <button
-            className="flex items-center gap-1"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            MRP
-            <ArrowUpDown className="w-4 h-4 text-gray-400" />
-          </button>
-        ),
-        cell: ({ getValue }) => (
-          <span className="text-sm font-medium">₹{Number(getValue() as number).toLocaleString('en-IN')}</span>
-        ),
-      },
+      
       {
         accessorKey: 'quantity',
         header: ({ column }) => (
@@ -81,11 +92,13 @@ export default function StocksTable({ data }: StocksTableProps) {
             className="flex items-center gap-1"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
+
             Quantity
             <ArrowUpDown className="w-4 h-4 text-gray-400" />
           </button>
         ),
         cell: ({ row }) => {
+          {/* Quantity */ }
           const qty = row.original.quantity;
           const low = qty < 50;
           return (
