@@ -74,6 +74,7 @@ export default function StocksTable({ data }: StocksTableProps) {
           );
         },
       },
+    
       {
         accessorKey: 'category',
         header: 'Category',
