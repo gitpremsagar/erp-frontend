@@ -21,6 +21,7 @@ import { API } from "@/lib/constants";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
    // useRedirectIfLoggedIn();
@@ -28,7 +29,7 @@ export default function SignInForm() {
   const [isPosting, setIsPosting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof SigninFormSchema>>({
     resolver: zodResolver(SigninFormSchema),
     defaultValues: {
@@ -40,7 +41,27 @@ export default function SignInForm() {
   async function onSubmit(values: z.infer<typeof SigninFormSchema>) {
     setIsPosting(true);
     setError(null);
+
+    console.log(values);
+
+    //temprory login logic for demonstaration purpose
+    if(values.email === "abhishek@demo.com" && values.password === "123@456") {
+      setError("Login successful!");
+      setIsPosting(false);
+      //redirect to admin dashboard
+      router.push("/admin");
+      return;
+    } else {
+      setError("Invalid email or password. Please try again.");
+      setIsPosting(false);
+      form.setError("password", {
+        type: "manual",
+        message: "Invalid email or password. Please try again."
+      });
+    }
   
+    return;
+
     try {
       const response = await axios.post(API.AUTH.LOGIN, values);
   
@@ -53,7 +74,7 @@ export default function SignInForm() {
       
       // Redirect to home page or dashboard
       // router.push("/");
-    } catch (error) {
+    } catch (error: any) {
       if(error instanceof AxiosError) {
         if(error.response?.status === 404) {
           setError("User not found. Please check your email.");
@@ -73,6 +94,10 @@ export default function SignInForm() {
         }
       }
       setError(error instanceof Error ? error.message : "Sign-in failed");
+      form.setError("password", {
+        type: "manual",
+        message: error instanceof Error ? error.message : "Sign-in failed"
+      });
       console.log(error);
     } finally {
       setIsPosting(false);
