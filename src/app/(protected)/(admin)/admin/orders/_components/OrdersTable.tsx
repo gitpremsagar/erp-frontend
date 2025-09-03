@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { MoreHorizontal, Eye, Edit, Trash2, Package, Truck, CheckCircle, Clock, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Order } from './mockData';
@@ -47,6 +48,7 @@ const getStatusBadge = (status: Order['status']) => {
 
 export default function OrdersTable({ orders }: OrdersTableProps) {
   const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
+  const router = useRouter();
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -97,7 +99,10 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
               <tr key={order.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div>
-                    <div className="text-sm font-medium text-gray-900">
+                    <div 
+                      className="text-sm font-medium text-gray-900 cursor-pointer hover:text-blue-600"
+                      onClick={() => router.push(`/admin/orders/${order.id}`)}
+                    >
                       {order.orderNumber}
                     </div>
                     <div className="text-sm text-gray-500">
@@ -152,7 +157,13 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
                     {selectedOrder === order.id && (
                       <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
                         <div className="py-1">
-                          <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          <button 
+                            className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => {
+                              router.push(`/admin/orders/${order.id}`);
+                              setSelectedOrder(null);
+                            }}
+                          >
                             <Eye className="w-4 h-4 mr-3" />
                             View Details
                           </button>

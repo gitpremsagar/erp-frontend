@@ -1,7 +1,16 @@
+export interface OrderItem {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+  image?: string;
+}
+
 export interface Order {
   id: string;
   customerName: string;
   customerEmail: string;
+  customerPhone?: string;
   orderDate: string;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   total: number;
@@ -9,6 +18,10 @@ export interface Order {
   paymentMethod: string;
   shippingAddress: string;
   orderNumber: string;
+  orderItems?: OrderItem[];
+  notes?: string;
+  estimatedDelivery?: string;
+  trackingNumber?: string;
 }
 
 export const ordersData: Order[] = [
@@ -16,25 +29,40 @@ export const ordersData: Order[] = [
     id: '1',
     customerName: 'John Smith',
     customerEmail: 'john.smith@email.com',
+    customerPhone: '+1-555-0123',
     orderDate: '2024-01-15',
     status: 'delivered',
     total: 299.99,
     items: 3,
     paymentMethod: 'Credit Card',
     shippingAddress: '123 Main St, New York, NY 10001',
-    orderNumber: 'ORD-2024-001'
+    orderNumber: 'ORD-2024-001',
+    orderItems: [
+      { id: '1', name: 'Wireless Bluetooth Headphones', quantity: 1, price: 199.99 },
+      { id: '2', name: 'USB-C Charging Cable', quantity: 2, price: 50.00 }
+    ],
+    notes: 'Customer requested express delivery',
+    estimatedDelivery: '2024-01-18',
+    trackingNumber: 'TRK-123456789'
   },
   {
     id: '2',
     customerName: 'Sarah Johnson',
     customerEmail: 'sarah.j@email.com',
+    customerPhone: '+1-555-0456',
     orderDate: '2024-01-16',
     status: 'shipped',
     total: 149.50,
     items: 2,
     paymentMethod: 'PayPal',
     shippingAddress: '456 Oak Ave, Los Angeles, CA 90210',
-    orderNumber: 'ORD-2024-002'
+    orderNumber: 'ORD-2024-002',
+    orderItems: [
+      { id: '3', name: 'Smart Fitness Watch', quantity: 1, price: 129.99 },
+      { id: '4', name: 'Wireless Earbuds', quantity: 1, price: 19.51 }
+    ],
+    estimatedDelivery: '2024-01-20',
+    trackingNumber: 'TRK-987654321'
   },
   {
     id: '3',
