@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SigninFormSchema } from "@/lib/Schemas/signinForm.schema";
+import { SigninFormSchema } from "@/lib/schemas/signinForm.schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,

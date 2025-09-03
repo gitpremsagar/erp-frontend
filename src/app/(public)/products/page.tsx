@@ -6,9 +6,9 @@ import {
   ProductsFilters,
   ProductsGrid,
   ProductsFeatures,
-  useProducts,
   sortOptions
 } from './_components';
+import { useProducts } from '@/hooks/products';
 
 export default function ProductsPage() {
   const {

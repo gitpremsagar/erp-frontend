@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Product, Category } from './types';
-import { productServices, GetProductsParams } from '@/lib/services/productServices';
+import { Product, Category, GetProductsParams } from '@/app/(public)/products/_components/types';
+import { productServices } from '@/lib/services/productServices';
 
 export function useProducts() {
   const [searchTerm, setSearchTerm] = useState('');
