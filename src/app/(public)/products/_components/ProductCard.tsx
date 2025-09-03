@@ -38,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="p-4">
         <div className="mb-2">
           <span className="text-xs font-medium text-primary uppercase tracking-wide">
-            {product.category}
+            {product.Category?.name || 'Unknown Category'}
           </span>
         </div>
         <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
@@ -59,6 +59,24 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="flex items-center gap-1 text-gray-600">
             <Weight className="w-4 h-4" />
             <span>{product.grammage}g</span>
+          </div>
+        </div>
+
+        {/* Stock Status */}
+        <div className="mb-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">Stock:</span>
+            <Badge 
+              className={`text-xs ${
+                product.stock <= product.lowStockLimit 
+                  ? 'bg-red-100 text-red-800' 
+                  : product.stock >= product.overStockLimit 
+                  ? 'bg-orange-100 text-orange-800'
+                  : 'bg-green-100 text-green-800'
+              }`}
+            >
+              {product.stock} units
+            </Badge>
           </div>
         </div>
 

@@ -7,7 +7,6 @@ import {
   ProductsGrid,
   ProductsFeatures,
   useProducts,
-  categories,
   sortOptions
 } from './_components';
 
@@ -20,7 +19,10 @@ export default function ProductsPage() {
     sortBy,
     setSortBy,
     sortedProducts,
-    totalProducts
+    totalProducts,
+    loading,
+    error,
+    categories
   } = useProducts();
 
   return (
@@ -49,6 +51,8 @@ export default function ProductsPage() {
         <ProductsGrid 
           products={sortedProducts}
           totalProducts={totalProducts}
+          loading={loading}
+          error={error}
         />
       </div>
 

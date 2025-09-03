@@ -1,7 +1,6 @@
 'use client';
 
-import { Category, Group, SubCategory, SortOption } from './types';
-import { groups, subCategories } from './mockData';
+import { Category, SortOption } from './types';
 
 interface ProductsFiltersProps {
   categories: Category[];
@@ -39,21 +38,6 @@ export default function ProductsFilters({
                   }`}
                 >
                   {category.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Group and Subcategory Filters */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-gray-700">Groups:</span>
-            <div className="flex flex-wrap gap-2">
-              {groups.map((group) => (
-                <button
-                  key={group.id}
-                  className="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-                >
-                  {group.name}
                 </button>
               ))}
             </div>
