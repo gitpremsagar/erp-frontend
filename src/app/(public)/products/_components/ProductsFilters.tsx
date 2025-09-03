@@ -1,6 +1,7 @@
 'use client';
 
-import { Category, SortOption } from './types';
+import { Category, Group, SubCategory, SortOption } from './types';
+import { groups, subCategories } from './mockData';
 
 interface ProductsFiltersProps {
   categories: Category[];
@@ -22,9 +23,10 @@ export default function ProductsFilters({
   return (
     <div className="bg-white border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col gap-4">
+          {/* Category Filters */}
           <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-gray-700">Filter by:</span>
+            <span className="text-sm font-medium text-gray-700">Categories:</span>
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
@@ -41,6 +43,23 @@ export default function ProductsFilters({
               ))}
             </div>
           </div>
+
+          {/* Group and Subcategory Filters */}
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium text-gray-700">Groups:</span>
+            <div className="flex flex-wrap gap-2">
+              {groups.map((group) => (
+                <button
+                  key={group.id}
+                  className="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                >
+                  {group.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Sort Options */}
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-gray-700">Sort by:</span>
             <select

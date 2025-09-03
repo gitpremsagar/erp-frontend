@@ -10,9 +10,10 @@ export function useProducts() {
   const filteredProducts = useMemo(() => {
     return dummyProducts.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           product.description.toLowerCase().includes(searchTerm.toLowerCase());
+                           product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           product.productCode.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || 
-                             product.category.toLowerCase() === selectedCategory;
+                             product.categoryId === selectedCategory;
       return matchesSearch && matchesCategory;
     });
   }, [searchTerm, selectedCategory]);
@@ -24,10 +25,14 @@ export function useProducts() {
           return a.mrp - b.mrp;
         case 'price-high':
           return b.mrp - a.mrp;
-        case 'rating':
-          return b.rating - a.rating;
+        case 'stock-high':
+          return b.stock - a.stock;
+        case 'stock-low':
+          return a.stock - b.stock;
+        case 'expiry-soon':
+          return new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime();
         case 'newest':
-          return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+          return new Date(b.stockEntryDate).getTime() - new Date(a.stockEntryDate).getTime();
         default:
           return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
       }
