@@ -3,14 +3,14 @@
 import Image from "next/image";
 
 import { useState, useEffect } from "react";
-import { Menu, X, User, Bell, Search, Building2 } from "lucide-react";
+import { Menu, X, User, Bell, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {

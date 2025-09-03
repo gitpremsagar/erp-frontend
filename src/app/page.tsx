@@ -10,7 +10,6 @@ import {
   Phone, 
   Mail, 
   MapPin,
-  ShoppingCart,
   Clock,
   Shield,
   Heart

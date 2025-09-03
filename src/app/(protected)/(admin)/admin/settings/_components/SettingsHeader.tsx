@@ -1,6 +1,6 @@
 'use client';
 
-import { Settings, Download, Save } from 'lucide-react';
+import { Download, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function SettingsHeader() {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { Send, Paperclip, Smile, MoreVertical, Phone, Video, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +13,7 @@ export default function ChatMain() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const currentConversation = chatConversations.find(conv => conv.id === selectedConversation);
-  const currentMessages = chatMessages[selectedConversation] || [];
+  const currentMessages = useMemo(() => chatMessages[selectedConversation] || [], [selectedConversation]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Customer } from './mockData';
 import { MoreHorizontal, Eye, Edit, Trash2, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 interface CustomersTableProps {
   customers: Customer[];
@@ -80,10 +81,12 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-10 w-10">
-                      <img
+                      <Image
                         className="h-10 w-10 rounded-full object-cover"
                         src={customer.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(customer.name)}&background=random`}
                         alt={customer.name}
+                        width={40}
+                        height={40}
                       />
                     </div>
                     <div className="ml-4">

@@ -15,7 +15,7 @@ import { ProductRow } from './mockData';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowUpDown, MoreHorizontal, Package, AlertTriangle } from 'lucide-react';
-import Image from 'next/image';
+
 
 interface StocksTableProps {
   data: ProductRow[];
@@ -123,7 +123,7 @@ export default function StocksTable({ data }: StocksTableProps) {
       {
         id: 'actions',
         header: () => <span className="sr-only">Actions</span>,
-        cell: ({ row }) => (
+        cell: () => (
           <div className="text-right">
             <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
               <MoreHorizontal className="h-4 w-4" />

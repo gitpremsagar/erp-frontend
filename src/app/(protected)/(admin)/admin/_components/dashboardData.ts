@@ -1,10 +1,8 @@
 import { 
     Users, 
     Package, 
-    TrendingUp, 
     DollarSign,
     ShoppingCart,
-    Truck,
     BarChart3,
     Settings
 } from 'lucide-react';

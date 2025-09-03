@@ -18,8 +18,6 @@ import { useState } from "react";
 import { EyeOff, Eye, Loader2 } from "lucide-react";
 import { AxiosError } from "axios";
 import { API } from "@/lib/constants";
-import Link from "next/link";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -74,9 +72,9 @@ export default function SignInForm() {
       
       // Redirect to home page or dashboard
       // router.push("/");
-    } catch (error: any) {
+    } catch (error: unknown) {
       if(error instanceof AxiosError) {
-        if(error.response?.status === 404) {
+        if((error as AxiosError).response?.status === 404) {
           setError("User not found. Please check your email.");
           form.setError("email", {
             type: "manual",
@@ -84,7 +82,7 @@ export default function SignInForm() {
           });
           return; 
         }
-        if(error.response?.status === 401) {
+        if((error as AxiosError).response?.status === 401) {
           setError("Invalid email or password. Please try again.");
           form.setError("password", {
             type: "manual",
@@ -93,12 +91,13 @@ export default function SignInForm() {
           return;
         }
       }
-      setError(error instanceof Error ? error.message : "Sign-in failed");
+      const errorMessage = "Sign-in failed";
+      setError(errorMessage);
       form.setError("password", {
         type: "manual",
-        message: error instanceof Error ? error.message : "Sign-in failed"
+        message: errorMessage
       });
-      console.log(error);
+      console.log("Error occurred during sign-in");
     } finally {
       setIsPosting(false);
     }

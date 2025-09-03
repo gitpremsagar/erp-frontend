@@ -1,4 +1,4 @@
-import Header from "@/components/home/Header";
+
 
 export const metadata = {
     title: "All Haldiram’s Products – Buy Namkeen, Mithai & Snacks",
