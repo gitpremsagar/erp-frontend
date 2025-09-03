@@ -1,6 +1,6 @@
 export const BASE_API_URL = "http://localhost:3008";
 
-const API_URL = `${BASE_API_URL}/api/v1`;
+const API_URL = `${BASE_API_URL}/api`;
 
 export const API = {
     AUTH:{
