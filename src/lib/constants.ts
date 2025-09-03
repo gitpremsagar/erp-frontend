@@ -1,11 +1,12 @@
 export const BASE_API_URL = "http://localhost:3008";
 
-const API_URL = `${BASE_API_URL}/api`;
+export const API_URL = `${BASE_API_URL}/api`;
 
 export const API = {
     AUTH:{
         LOGIN: `${API_URL}/auth/login`,
         SIGNUP: `${API_URL}/auth/signup`,
+        REFRESH_ACCESS_TOKEN: `${API_URL}/auth/refresh-access-token`,
         FORGOT_PASSWORD: `${API_URL}/auth/forgot-password`,
         RESET_PASSWORD: `${API_URL}/auth/reset-password`,
         VERIFY_EMAIL_OTP: `${API_URL}/auth/verify-email-otp`,
