@@ -1,3 +1,5 @@
+// old page dont take reference from this page
+
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
@@ -7,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AdminHeader from '../../_components/AdminHeader';
 import AdminSidebar from '../../_components/AdminSidebar';
-import { ordersData, Order } from '../_components/mockData';
 
 export default function OrderDetailsPage() {
   const params = useParams();

@@ -30,5 +30,9 @@ export const API = {
     ORDERS: {
         GET_ALL_ORDERS: `${API_URL}/orders`,
         GET_ORDER_BY_ID: `${API_URL}/orders/:id`,
+    },
+    ORDER_ITEMS: {
+        GET_ALL_ORDER_ITEMS: `${API_URL}/order-items`,
+        GET_ORDER_ITEMS_BY_ORDER_ID: `${API_URL}/order-items`,
     }
 }
