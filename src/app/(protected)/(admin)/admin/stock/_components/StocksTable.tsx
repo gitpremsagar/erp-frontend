@@ -6,26 +6,39 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { ProductRow } from './mockData';
+import { ApiProduct } from '@/lib/types/products/ApiProductsResponse.type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowUpDown, MoreHorizontal, Package, AlertTriangle } from 'lucide-react';
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ArrowUpDown, Package, AlertTriangle, Edit } from 'lucide-react';
 
 interface StocksTableProps {
-  data: ProductRow[];
+  data: ApiProduct[];
+  onUpdateStock: (product: ApiProduct) => void;
 }
 
-export default function StocksTable({ data }: StocksTableProps) {
+export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
+  const [groupFilter, setGroupFilter] = React.useState<string>('all');
 
-  const columns = React.useMemo<ColumnDef<ProductRow>[]>(
+  // Get unique groups for filter
+  const uniqueGroups = React.useMemo(() => {
+    const groups = data.map(product => product.Group?.name).filter(Boolean);
+    return Array.from(new Set(groups));
+  }, [data]);
+
+  // Filter data based on group selection
+  const filteredData = React.useMemo(() => {
+    if (groupFilter === 'all') return data;
+    return data.filter(product => product.Group?.name === groupFilter);
+  }, [data, groupFilter]);
+
+  const columns = React.useMemo<ColumnDef<ApiProduct>[]>(
     () => [
       {
         accessorKey: 'mrp',
@@ -34,7 +47,6 @@ export default function StocksTable({ data }: StocksTableProps) {
             className="flex items-center gap-1"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            {/* MRP */}
             MRP
             <ArrowUpDown className="w-4 h-4 text-gray-400" />
           </button>
@@ -55,60 +67,51 @@ export default function StocksTable({ data }: StocksTableProps) {
           </button>
         ),
         cell: ({ row }) => {
-          const p = row.original;
+          const product = row.original;
           return (
             <div className="flex items-center gap-3">
-              {/* Product Image */}
-              {/* <Image src={p.imageUrl} alt={p.name} className="w-10 h-10 rounded object-cover"
-                width={40}
-                height={40}
-              /> */}
               <div>
-                {/* Product Name */}
-                <div className="text-sm font-medium text-gray-900">{p.name}</div>
-                {/* Product Code */}
-                <div className="text-xs text-gray-500">{p.productCode}</div>
+                <div className="text-sm font-medium text-gray-900">{product.name}</div>
+                <div className="text-xs text-gray-500">{product.productCode}</div>
               </div>
             </div>
           );
         },
       },
-    
       {
-        accessorKey: 'category',
-        header: 'Category',
+        accessorKey: 'Group.name',
+        header: 'Group',
         cell: ({ row }) => (
           <div className="text-sm text-gray-900">
-            {/* Category */}
-            {row.original.category} / {row.original.group}
+            {row.original.Group?.name || 'N/A'}
           </div>
         ),
       },
-      
       {
-        accessorKey: 'quantity',
+        accessorKey: 'stock',
         header: ({ column }) => (
           <button
             className="flex items-center gap-1"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-
-            Quantity
+            Stock
             <ArrowUpDown className="w-4 h-4 text-gray-400" />
           </button>
         ),
         cell: ({ row }) => {
-          {/* Quantity */ }
-          const qty = row.original.quantity;
-          const low = qty < 50;
+          const stock = row.original.stock;
+          const lowStockLimit = row.original.lowStockLimit;
+          const isLow = stock <= lowStockLimit;
           return (
             <div className="flex items-center gap-2">
-              {low ? (
+              {isLow ? (
                 <AlertTriangle className="w-4 h-4 text-amber-500" />
               ) : (
                 <Package className="w-4 h-4 text-gray-400" />
               )}
-              <span className={`text-sm ${low ? 'text-amber-700 font-medium' : 'text-gray-900'}`}>{qty}</span>
+              <span className={`text-sm ${isLow ? 'text-amber-700 font-medium' : 'text-gray-900'}`}>
+                {stock}
+              </span>
             </div>
           );
         },
@@ -117,26 +120,41 @@ export default function StocksTable({ data }: StocksTableProps) {
         accessorKey: 'expiryDate',
         header: 'Expiry',
         cell: ({ getValue }) => (
-          <span className="text-sm text-gray-700">{new Date(String(getValue())).toLocaleDateString()}</span>
+          <span className="text-sm text-gray-700">
+            {new Date(String(getValue())).toLocaleDateString()}
+          </span>
+        ),
+      },
+      {
+        accessorKey: 'grammage',
+        header: 'Grammage',
+        cell: ({ getValue }) => (
+          <span className="text-sm text-gray-700">{getValue() as string}g</span>
         ),
       },
       {
         id: 'actions',
-        header: () => <span className="sr-only">Actions</span>,
-        cell: () => (
-          <div className="text-right">
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
+        header: 'Actions',
+        cell: ({ row }) => (
+          <div className="text-center">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="h-8 px-3"
+              onClick={() => onUpdateStock(row.original)}
+            >
+              <Edit className="h-4 w-4 mr-1" />
+              Update Stock
             </Button>
           </div>
         ),
       },
     ],
-    []
+    [onUpdateStock]
   );
 
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     state: { sorting, globalFilter },
     onSortingChange: setSorting,
@@ -144,18 +162,35 @@ export default function StocksTable({ data }: StocksTableProps) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
       <div className="p-4 border-b border-gray-200 flex items-center justify-between gap-3">
-        <Input
-          placeholder="Search products..."
-          value={globalFilter ?? ''}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          className="max-w-sm"
-        />
+        <div className="flex items-center gap-4">
+          <Input
+            placeholder="Search products..."
+            value={globalFilter ?? ''}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            className="max-w-sm"
+          />
+          <Select value={groupFilter} onValueChange={setGroupFilter}>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Filter by Group" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Groups</SelectItem>
+              {uniqueGroups.map((group) => (
+                <SelectItem key={group} value={group}>
+                  {group}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="text-sm text-gray-600">
+          Total Products: {filteredData.length}
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
@@ -184,19 +219,6 @@ export default function StocksTable({ data }: StocksTableProps) {
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            Previous
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            Next
-          </Button>
-        </div>
-        <div className="text-sm text-gray-700">
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-        </div>
       </div>
     </div>
   );

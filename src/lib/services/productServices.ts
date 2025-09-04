@@ -56,5 +56,16 @@ export const productServices = {
       console.error('Error fetching products by sub-category:', error);
       throw error;
     }
+  },
+
+  async updateProduct(id: string, data: Partial<ApiProduct>): Promise<ApiProduct> {
+    try {
+      const url = API.PRODUCTS.UPDATE_PRODUCT.replace(':id', id);
+      const response = await customAxios.put(url, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating product:', error);
+      throw error;
+    }
   }
 };
