@@ -13,7 +13,7 @@ import {
   ColumnFiltersState,
   getPaginationRowModel,
 } from '@tanstack/react-table';
-import { MoreHorizontal, Eye, Edit, Trash2, Package, Truck, CheckCircle, Clock, X, ArrowUpDown } from 'lucide-react';
+import { Eye, Edit, Trash2, Package, Truck, CheckCircle, Clock, X, ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -70,7 +70,6 @@ export default function OrdersTableNew({ orders, onUpdateStatus, onDelete }: Ord
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
-  const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
   const router = useRouter();
 
   const formatDate = (dateString: string) => {
@@ -81,12 +80,7 @@ export default function OrdersTableNew({ orders, onUpdateStatus, onDelete }: Ord
     });
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR'
-    }).format(amount);
-  };
+
 
   const columns: ColumnDef<Order>[] = [
     {
@@ -98,7 +92,7 @@ export default function OrdersTableNew({ orders, onUpdateStatus, onDelete }: Ord
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             className="h-8 p-0 font-semibold"
           >
-            Order ID
+            ORDER ID
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
@@ -111,7 +105,7 @@ export default function OrdersTableNew({ orders, onUpdateStatus, onDelete }: Ord
               className="text-sm font-medium text-gray-900 cursor-pointer hover:text-blue-600"
               onClick={() => router.push(`/admin/orders/${order.id}`)}
             >
-              {order.customeOrderId}
+              {order.customeOrderId.toUpperCase()}
             </div>
             <div className="text-xs text-gray-500">
               {order.OrderItem.length} item{order.OrderItem.length !== 1 ? 's' : ''}
@@ -163,29 +157,7 @@ export default function OrdersTableNew({ orders, onUpdateStatus, onDelete }: Ord
         );
       },
     },
-    {
-      accessorKey: 'totalPrice',
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="h-8 p-0 font-semibold"
-          >
-            Total
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue('totalPrice'));
-        return (
-          <div className="text-sm font-medium text-gray-900">
-            {formatCurrency(amount)}
-          </div>
-        );
-      },
-    },
+
     {
       accessorKey: 'orderDate',
       header: ({ column }) => {
@@ -215,47 +187,34 @@ export default function OrdersTableNew({ orders, onUpdateStatus, onDelete }: Ord
       cell: ({ row }) => {
         const order = row.original;
         return (
-          <div className="relative">
+          <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setSelectedOrder(selectedOrder === order.id ? null : order.id)}
-              className="text-gray-400 hover:text-gray-600"
+              onClick={() => router.push(`/admin/orders/${order.id}`)}
+              className="text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+              title="View Details"
             >
-              <MoreHorizontal className="w-4 h-4" />
+              <Eye className="w-4 h-4" />
             </Button>
-            
-            {selectedOrder === order.id && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-                <div className="py-1">
-                  <button 
-                    className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      router.push(`/admin/orders/${order.id}`);
-                      setSelectedOrder(null);
-                    }}
-                  >
-                    <Eye className="w-4 h-4 mr-3" />
-                    View Details
-                  </button>
-                  <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    <Edit className="w-4 h-4 mr-3" />
-                    Edit Order
-                  </button>
-                  {onDelete && (
-                    <button 
-                      className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                      onClick={() => {
-                        onDelete(order.id);
-                        setSelectedOrder(null);
-                      }}
-                    >
-                      <Trash2 className="w-4 h-4 mr-3" />
-                      Delete Order
-                    </button>
-                  )}
-                </div>
-              </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-gray-600 hover:text-gray-800 hover:bg-gray-50"
+              title="Edit Order"
+            >
+              <Edit className="w-4 h-4" />
+            </Button>
+            {onDelete && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onDelete(order.id)}
+                className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                title="Delete Order"
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
             )}
           </div>
         );
