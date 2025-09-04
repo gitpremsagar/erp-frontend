@@ -1,139 +1,102 @@
-export interface OrderItem {
-  id: string;
-  name: string;
-  quantity: number;
-  price: number;
-  image?: string;
-}
-
 export interface Order {
   id: string;
+  orderNumber: string;
   customerName: string;
   customerEmail: string;
-  customerPhone?: string;
-  orderDate: string;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   total: number;
   items: number;
+  orderDate: string;
   paymentMethod: string;
-  shippingAddress: string;
-  orderNumber: string;
-  orderItems?: OrderItem[];
-  notes?: string;
-  estimatedDelivery?: string;
-  trackingNumber?: string;
 }
 
 export const ordersData: Order[] = [
   {
     id: '1',
+    orderNumber: 'ORD-001',
     customerName: 'John Smith',
     customerEmail: 'john.smith@email.com',
-    customerPhone: '+1-555-0123',
-    orderDate: '2024-01-15',
-    status: 'delivered',
-    total: 299.99,
+    status: 'pending',
+    total: 2500,
     items: 3,
-    paymentMethod: 'Credit Card',
-    shippingAddress: '123 Main St, New York, NY 10001',
-    orderNumber: 'ORD-2024-001',
-    orderItems: [
-      { id: '1', name: 'Wireless Bluetooth Headphones', quantity: 1, price: 199.99 },
-      { id: '2', name: 'USB-C Charging Cable', quantity: 2, price: 50.00 }
-    ],
-    notes: 'Customer requested express delivery',
-    estimatedDelivery: '2024-01-18',
-    trackingNumber: 'TRK-123456789'
+    orderDate: '2024-01-15',
+    paymentMethod: 'Credit Card'
   },
   {
     id: '2',
+    orderNumber: 'ORD-002',
     customerName: 'Sarah Johnson',
     customerEmail: 'sarah.j@email.com',
-    customerPhone: '+1-555-0456',
-    orderDate: '2024-01-16',
-    status: 'shipped',
-    total: 149.50,
+    status: 'processing',
+    total: 1800,
     items: 2,
-    paymentMethod: 'PayPal',
-    shippingAddress: '456 Oak Ave, Los Angeles, CA 90210',
-    orderNumber: 'ORD-2024-002',
-    orderItems: [
-      { id: '3', name: 'Smart Fitness Watch', quantity: 1, price: 129.99 },
-      { id: '4', name: 'Wireless Earbuds', quantity: 1, price: 19.51 }
-    ],
-    estimatedDelivery: '2024-01-20',
-    trackingNumber: 'TRK-987654321'
+    orderDate: '2024-01-14',
+    paymentMethod: 'PayPal'
   },
   {
     id: '3',
-    customerName: 'Michael Brown',
-    customerEmail: 'michael.b@email.com',
-    orderDate: '2024-01-17',
-    status: 'processing',
-    total: 89.99,
-    items: 1,
-    paymentMethod: 'Credit Card',
-    shippingAddress: '789 Pine Rd, Chicago, IL 60601',
-    orderNumber: 'ORD-2024-003'
+    orderNumber: 'ORD-003',
+    customerName: 'Mike Wilson',
+    customerEmail: 'mike.wilson@email.com',
+    status: 'shipped',
+    total: 3200,
+    items: 4,
+    orderDate: '2024-01-13',
+    paymentMethod: 'Bank Transfer'
   },
   {
     id: '4',
+    orderNumber: 'ORD-004',
     customerName: 'Emily Davis',
-    customerEmail: 'emily.d@email.com',
-    orderDate: '2024-01-18',
-    status: 'pending',
-    total: 199.99,
-    items: 4,
-    paymentMethod: 'Bank Transfer',
-    shippingAddress: '321 Elm St, Miami, FL 33101',
-    orderNumber: 'ORD-2024-004'
+    customerEmail: 'emily.davis@email.com',
+    status: 'delivered',
+    total: 1500,
+    items: 1,
+    orderDate: '2024-01-12',
+    paymentMethod: 'Credit Card'
   },
   {
     id: '5',
-    customerName: 'David Wilson',
-    customerEmail: 'david.w@email.com',
-    orderDate: '2024-01-19',
+    orderNumber: 'ORD-005',
+    customerName: 'David Brown',
+    customerEmail: 'david.brown@email.com',
     status: 'cancelled',
-    total: 75.00,
-    items: 2,
-    paymentMethod: 'Credit Card',
-    shippingAddress: '654 Maple Dr, Seattle, WA 98101',
-    orderNumber: 'ORD-2024-005'
+    total: 2800,
+    items: 3,
+    orderDate: '2024-01-11',
+    paymentMethod: 'PayPal'
   },
   {
     id: '6',
+    orderNumber: 'ORD-006',
     customerName: 'Lisa Anderson',
-    customerEmail: 'lisa.a@email.com',
-    orderDate: '2024-01-20',
-    status: 'delivered',
-    total: 399.99,
-    items: 5,
-    paymentMethod: 'PayPal',
-    shippingAddress: '987 Cedar Ln, Austin, TX 73301',
-    orderNumber: 'ORD-2024-006'
+    customerEmail: 'lisa.anderson@email.com',
+    status: 'pending',
+    total: 2100,
+    items: 2,
+    orderDate: '2024-01-10',
+    paymentMethod: 'Credit Card'
   },
   {
     id: '7',
+    orderNumber: 'ORD-007',
     customerName: 'Robert Taylor',
-    customerEmail: 'robert.t@email.com',
-    orderDate: '2024-01-21',
-    status: 'shipped',
-    total: 129.99,
-    items: 2,
-    paymentMethod: 'Credit Card',
-    shippingAddress: '147 Birch Ave, Denver, CO 80201',
-    orderNumber: 'ORD-2024-007'
+    customerEmail: 'robert.taylor@email.com',
+    status: 'processing',
+    total: 4500,
+    items: 5,
+    orderDate: '2024-01-09',
+    paymentMethod: 'Bank Transfer'
   },
   {
     id: '8',
-    customerName: 'Jennifer Martinez',
-    customerEmail: 'jennifer.m@email.com',
-    orderDate: '2024-01-22',
-    status: 'processing',
-    total: 179.50,
-    items: 3,
-    paymentMethod: 'Bank Transfer',
-    shippingAddress: '258 Spruce St, Portland, OR 97201',
-    orderNumber: 'ORD-2024-008'
+    orderNumber: 'ORD-008',
+    customerName: 'Jennifer White',
+    customerEmail: 'jennifer.white@email.com',
+    status: 'shipped',
+    total: 1900,
+    items: 2,
+    orderDate: '2024-01-08',
+    paymentMethod: 'Credit Card'
   }
 ];
