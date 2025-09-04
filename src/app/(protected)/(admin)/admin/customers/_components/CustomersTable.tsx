@@ -13,7 +13,7 @@ import {
   ColumnFiltersState,
   FilterFn,
 } from '@tanstack/react-table';
-import { Customer } from './mockData';
+import { Customer } from '@/lib/types/customers/Customer.type';
 import { MoreHorizontal, Eye, Edit, Trash2, Mail, Phone, Search, ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,10 +24,11 @@ interface CustomersTableProps {
   customers: Customer[];
 }
 
-// Custom filter function for status
-const statusFilter: FilterFn<Customer> = (row, columnId, filterValue) => {
+// Custom filter function for privilege
+const privilegeFilter: FilterFn<Customer> = (row, columnId, filterValue) => {
   if (filterValue === 'all') return true;
-  return row.getValue(columnId) === filterValue;
+  const customer = row.original;
+  return customer.privilege.name === filterValue;
 };
 
 export default function CustomersTable({ customers }: CustomersTableProps) {
@@ -36,14 +37,14 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
 
-  const getStatusBadge = (status: Customer['status']) => {
-    const statusConfig = {
-      active: { bg: 'bg-green-100', text: 'text-green-800', label: 'Active' },
-      inactive: { bg: 'bg-gray-100', text: 'text-gray-800', label: 'Inactive' },
-      vip: { bg: 'bg-purple-100', text: 'text-purple-800', label: 'VIP' }
+  const getPrivilegeBadge = (privilegeName: string) => {
+    const privilegeConfig = {
+      CUSTOMER: { bg: 'bg-blue-100', text: 'text-blue-800', label: 'Customer' },
+      ADMIN: { bg: 'bg-red-100', text: 'text-red-800', label: 'Admin' },
+      MANAGER: { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'Manager' }
     };
 
-    const config = statusConfig[status];
+    const config = privilegeConfig[privilegeName as keyof typeof privilegeConfig] || { bg: 'bg-gray-100', text: 'text-gray-800', label: privilegeName };
     return (
       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${config.bg} ${config.text}`}>
         {config.label}
@@ -59,12 +60,7 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
     });
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR'
-    }).format(amount);
-  };
+
 
   const columns: ColumnDef<Customer>[] = useMemo(
     () => [
@@ -95,7 +91,7 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
               <div className="flex-shrink-0 h-10 w-10">
                 <Image
                   className="h-10 w-10 rounded-full object-cover"
-                  src={customer.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(customer.name)}&background=random`}
+                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(customer.name)}&background=random`}
                   alt={customer.name}
                   width={40}
                   height={40}
@@ -123,15 +119,31 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
         },
       },
       {
-        accessorKey: 'status',
-        header: 'Status',
-        filterFn: statusFilter,
+        accessorKey: 'privilege',
+        id: 'privilege',
+        header: 'Role',
+        filterFn: privilegeFilter,
         cell: ({ row }) => {
-          return getStatusBadge(row.getValue('status'));
+          const customer = row.original;
+          return getPrivilegeBadge(customer.privilege.name);
         },
       },
       {
-        accessorKey: 'totalOrders',
+        accessorKey: 'gstNumber',
+        header: 'GST Number',
+        cell: ({ row }) => {
+          return <div className="text-sm text-gray-900">{row.getValue('gstNumber')}</div>;
+        },
+      },
+      {
+        accessorKey: 'pan',
+        header: 'PAN',
+        cell: ({ row }) => {
+          return <div className="text-sm text-gray-900">{row.getValue('pan')}</div>;
+        },
+      },
+      {
+        accessorKey: 'createdAt',
         header: ({ column }) => {
           return (
             <Button
@@ -139,7 +151,7 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
               onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
               className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
             >
-              Orders
+              Created Date
               {column.getIsSorted() === 'asc' ? (
                 <ChevronUp className="ml-2 h-4 w-4" />
               ) : column.getIsSorted() === 'desc' ? (
@@ -151,79 +163,7 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
           );
         },
         cell: ({ row }) => {
-          return <div className="text-sm text-gray-900">{row.getValue('totalOrders')}</div>;
-        },
-      },
-      {
-        accessorKey: 'totalSpent',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
-            >
-              Total Spent
-              {column.getIsSorted() === 'asc' ? (
-                <ChevronUp className="ml-2 h-4 w-4" />
-              ) : column.getIsSorted() === 'desc' ? (
-                <ChevronDown className="ml-2 h-4 w-4" />
-              ) : (
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              )}
-            </Button>
-          );
-        },
-        cell: ({ row }) => {
-          return <div className="text-sm text-gray-900">{formatCurrency(row.getValue('totalSpent'))}</div>;
-        },
-      },
-      {
-        accessorKey: 'joinDate',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
-            >
-              Join Date
-              {column.getIsSorted() === 'asc' ? (
-                <ChevronUp className="ml-2 h-4 w-4" />
-              ) : column.getIsSorted() === 'desc' ? (
-                <ChevronDown className="ml-2 h-4 w-4" />
-              ) : (
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              )}
-            </Button>
-          );
-        },
-        cell: ({ row }) => {
-          return <div className="text-sm text-gray-500">{formatDate(row.getValue('joinDate'))}</div>;
-        },
-      },
-      {
-        accessorKey: 'lastOrderDate',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
-            >
-              Last Order
-              {column.getIsSorted() === 'asc' ? (
-                <ChevronUp className="ml-2 h-4 w-4" />
-              ) : column.getIsSorted() === 'desc' ? (
-                <ChevronDown className="ml-2 h-4 w-4" />
-              ) : (
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              )}
-            </Button>
-          );
-        },
-        cell: ({ row }) => {
-          return <div className="text-sm text-gray-500">{formatDate(row.getValue('lastOrderDate'))}</div>;
+          return <div className="text-sm text-gray-500">{formatDate(row.getValue('createdAt'))}</div>;
         },
       },
       {
@@ -313,19 +253,19 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
           </div>
           <div className="flex gap-2">
             <Select
-              value={(table.getColumn('status')?.getFilterValue() as string) ?? 'all'}
+              value={(table.getColumn('privilege')?.getFilterValue() as string) ?? 'all'}
               onValueChange={(value) => {
-                table.getColumn('status')?.setFilterValue(value);
+                table.getColumn('privilege')?.setFilterValue(value);
               }}
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder="Filter by role" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-                <SelectItem value="vip">VIP</SelectItem>
+                <SelectItem value="all">All Roles</SelectItem>
+                <SelectItem value="CUSTOMER">Customer</SelectItem>
+                <SelectItem value="ADMIN">Admin</SelectItem>
+                <SelectItem value="MANAGER">Manager</SelectItem>
               </SelectContent>
             </Select>
           </div>
