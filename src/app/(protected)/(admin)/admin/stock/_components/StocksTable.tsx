@@ -14,7 +14,8 @@ import { ApiProduct } from '@/lib/types/products/ApiProductsResponse.type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowUpDown, Package, AlertTriangle, Edit } from 'lucide-react';
+import { ArrowUpDown, Package, Edit } from 'lucide-react';
+import StockAlert from './StockAlert';
 
 interface StocksTableProps {
   data: ApiProduct[];
@@ -100,21 +101,22 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         ),
         cell: ({ row }) => {
           const stock = row.original.stock;
-          const lowStockLimit = row.original.lowStockLimit;
-          const isLow = stock <= lowStockLimit;
           return (
             <div className="flex items-center gap-2">
-              {isLow ? (
-                <AlertTriangle className="w-4 h-4 text-amber-500" />
-              ) : (
-                <Package className="w-4 h-4 text-gray-400" />
-              )}
-              <span className={`text-sm ${isLow ? 'text-amber-700 font-medium' : 'text-gray-900'}`}>
+              <Package className="w-4 h-4 text-gray-400" />
+              <span className="text-sm text-gray-900">
                 {stock}
               </span>
             </div>
           );
         },
+      },
+      {
+        accessorKey: 'stockAlert',
+        header: 'Stock Alert',
+        cell: ({ row }) => (
+          <StockAlert product={row.original} />
+        ),
       },
       {
         accessorKey: 'expiryDate',
