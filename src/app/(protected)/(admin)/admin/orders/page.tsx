@@ -20,7 +20,7 @@ export default function OrdersPage() {
     refreshOrders 
   } = useOrders();
 
-  const handleUpdateStatus = async (orderId: string, status: any) => {
+  const handleUpdateStatus = async (orderId: string, status: 'PENDING' | 'MODIFYING' | 'PACKING' | 'SHIPPING' | 'COMPLETED' | 'CANCELLED') => {
     try {
       await updateOrderStatus(orderId, status);
     } catch (error) {
