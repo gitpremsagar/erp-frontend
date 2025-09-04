@@ -734,92 +734,139 @@ export default function OrderDetailsPage() {
               </div>
               
               {/* Search and Filters */}
-              <div className="flex items-center justify-between py-4">
-                <div className="flex items-center gap-4">
-                  <Input
-                    placeholder="Search products..."
-                    value={globalFilter ?? ''}
-                    onChange={(event) => setGlobalFilter(event.target.value)}
-                    className="max-w-sm"
-                  />
-                  <span className="text-sm text-gray-500">
-                    Showing {table.getFilteredRowModel().rows.length} of {orderItems.length} items
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">
-                    Total Items: {totalItems}
-                  </span>
-                  <span className="text-sm text-gray-500">
-                    Total Value: {formatCurrency(calculatedTotal)}
-                  </span>
+              <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <Input
+                        placeholder="Search products..."
+                        value={globalFilter ?? ''}
+                        onChange={(event) => setGlobalFilter(event.target.value)}
+                        className="max-w-sm pl-10 pr-4 py-2 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      />
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">
+                        {table.getFilteredRowModel().rows.length} of {orderItems.length} items
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 text-sm">
+                    <div className="text-right">
+                      <span className="text-gray-500">Total Items:</span>
+                      <span className="ml-2 font-semibold text-gray-900">{totalItems}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-gray-500">Total Value:</span>
+                      <span className="ml-2 font-semibold text-gray-900">{formatCurrency(calculatedTotal)}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Table */}
-              <div className="rounded-md border overflow-hidden">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => (
-                          <th key={header.id} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                          </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {table.getRowModel().rows?.length ? (
-                      table.getRowModel().rows.map((row) => (
-                        <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                          {row.getVisibleCells().map((cell) => (
-                            <td key={cell.id} className="px-6 py-4 text-sm text-gray-900">
-                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </td>
+              <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                      {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                          {headerGroup.headers.map((header) => (
+                            <th key={header.id} className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                            </th>
                           ))}
                         </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={columns.length} className="h-24 text-center text-gray-500">
-                          No results found.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+                      ))}
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-100">
+                      {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row, rowIndex) => (
+                          <tr 
+                            key={row.id} 
+                            className={`hover:bg-gray-50 transition-all duration-200 ${
+                              rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'
+                            }`}
+                          >
+                            {row.getVisibleCells().map((cell) => (
+                              <td key={cell.id} className="px-6 py-4 text-sm text-gray-900">
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </td>
+                            ))}
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={columns.length} className="h-32 text-center">
+                            <div className="flex flex-col items-center justify-center text-gray-500">
+                              <Package className="w-12 h-12 text-gray-300 mb-2" />
+                              <p className="text-lg font-medium">No results found</p>
+                              <p className="text-sm">Try adjusting your search criteria</p>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
-              {/* Pagination */}
-              <div className="flex items-center justify-between py-4">
-                <div className="text-sm text-gray-500">
-                  Page {table.getState().pagination.pageIndex + 1} of{' '}
-                  {table.getPageCount()}
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                  >
-                    Next
-                  </Button>
+              {/* Enhanced Pagination */}
+              <div className="bg-white rounded-lg border border-gray-200 px-6 py-4 mt-6 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4 text-sm text-gray-600">
+                    <span>
+                      Showing <span className="font-medium text-gray-900">{table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}</span> to{' '}
+                      <span className="font-medium text-gray-900">
+                        {Math.min(
+                          (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+                          table.getFilteredRowModel().rows.length
+                        )}
+                      </span>{' '}
+                      of <span className="font-medium text-gray-900">{table.getFilteredRowModel().rows.length}</span> results
+                    </span>
+                    <span className="text-gray-400">|</span>
+                    <span>
+                      Page <span className="font-medium text-gray-900">{table.getState().pagination.pageIndex + 1}</span> of{' '}
+                      <span className="font-medium text-gray-900">{table.getPageCount()}</span>
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => table.previousPage()}
+                      disabled={!table.getCanPreviousPage()}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-gray-300 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                      Previous
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => table.nextPage()}
+                      disabled={!table.getCanNextPage()}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-gray-300 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Next
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
