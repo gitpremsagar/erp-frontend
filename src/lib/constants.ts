@@ -7,6 +7,7 @@ export const API = {
     AUTH:{
         LOGIN: `${API_URL}/auth/log-in`,
         SIGNUP: `${API_URL}/auth/sign-up`,
+        LOGOUT: `${API_URL}/auth/log-out`,
         REFRESH_ACCESS_TOKEN: `${API_URL}/auth/refresh-access-token`,
         FORGOT_PASSWORD: `${API_URL}/auth/forgot-password`,
         RESET_PASSWORD: `${API_URL}/auth/reset-password`,

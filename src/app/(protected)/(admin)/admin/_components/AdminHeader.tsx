@@ -7,14 +7,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
-import { resetUser } from '@/redux/slices/userSlice';
-import { useRouter } from 'next/navigation';
 import useAttemptLogin from '@/hooks/auth/useAttemptLogin';
+import useLogOut from '@/hooks/auth/useLogOut';
 
 export default function AdminHeader() {
 
-  useAttemptLogin();
-  // const { isAttemptingLogin, error, attemptSuccess } = await useAttemptLogin();
+  const { isAttemptingLogin, error, attemptSuccess } = useAttemptLogin();
+  const { logOut, isLoggingOut, error: logoutError } = useLogOut();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,7 +21,8 @@ export default function AdminHeader() {
   
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  const router = useRouter();
+
+  
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -50,10 +50,14 @@ export default function AdminHeader() {
     { name: 'Home', href: '/', current: false },
   ];
 
-  const handleLogout = () => {
-    dispatch(resetUser());
-    router.push('/log-in');
+  const handleLogout = async () => {
+    logOut();
   };
+
+  // TODO: add proper loading state
+  if(isAttemptingLogin) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <header className={`bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-all duration-300 ${
