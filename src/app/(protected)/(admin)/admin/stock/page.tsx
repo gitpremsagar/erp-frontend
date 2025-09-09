@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AdminHeader from "../_components/AdminHeader";
+
 import AdminSidebar from "../_components/AdminSidebar";
 import StocksHeader from "@/app/(protected)/(admin)/admin/stock/_components/StocksHeader";
 import StocksTable from "@/app/(protected)/(admin)/admin/stock/_components/StocksTable";
@@ -84,7 +84,7 @@ export default function StockPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminHeader />
+      
       <div className="flex h-[calc(100vh-64px)]">
         <AdminSidebar />
         <div className="flex-1 overflow-auto">

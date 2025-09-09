@@ -1,6 +1,5 @@
 'use client';
 
-import AdminHeader from "../_components/AdminHeader";
 import AdminSidebar from "../_components/AdminSidebar";
 import OrdersHeader from "./_components/OrdersHeader";
 import OrdersStats from "./_components/OrdersStats";
@@ -10,14 +9,14 @@ import { useOrders } from "@/lib/hooks/useOrders";
 import { toast } from "sonner";
 
 export default function OrdersPage() {
-  const { 
-    orders, 
-    loading, 
-    error, 
-    pagination, 
-    updateOrderStatus, 
+  const {
+    orders,
+    loading,
+    error,
+    pagination,
+    updateOrderStatus,
     deleteOrder,
-    refreshOrders 
+    refreshOrders
   } = useOrders();
 
   const handleUpdateStatus = async (orderId: string, status: 'PENDING' | 'MODIFYING' | 'PACKING' | 'SHIPPING' | 'COMPLETED' | 'CANCELLED') => {
@@ -45,7 +44,7 @@ export default function OrdersPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AdminHeader />
+
         <div className="flex h-[calc(100vh-64px)]">
           <AdminSidebar />
           <div className="flex-1 overflow-auto">
@@ -69,7 +68,7 @@ export default function OrdersPage() {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AdminHeader />
+
         <div className="flex h-[calc(100vh-64px)]">
           <AdminSidebar />
           <div className="flex-1 overflow-auto">
@@ -95,7 +94,6 @@ export default function OrdersPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminHeader />
       <div className="flex h-[calc(100vh-64px)]">
         <AdminSidebar />
         <div className="flex-1 overflow-auto">
@@ -103,8 +101,8 @@ export default function OrdersPage() {
             <OrdersHeader />
             <OrdersStats />
             <OrdersSearchAndActions />
-            <OrdersTableNew 
-              orders={orders} 
+            <OrdersTableNew
+              orders={orders}
               onUpdateStatus={handleUpdateStatus}
               onDelete={handleDeleteOrder}
             />

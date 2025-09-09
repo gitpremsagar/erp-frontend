@@ -10,7 +10,7 @@ import FinancialReports from "./_components/FinancialReports";
 export default function ReportsPage() {
     return (
         <div className="min-h-screen bg-gray-50">
-            <AdminHeader />
+            
             
             <div className="flex h-[calc(100vh-64px)]">
                 {/* Sidebar */}
