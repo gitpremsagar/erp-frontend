@@ -18,7 +18,7 @@ import { useState } from "react";
 import { EyeOff, Eye, Loader2 } from "lucide-react";
 import { AxiosError } from "axios";
 import { API } from "@/lib/constants";
-import axios from "axios";
+import { axiosWithCredentials } from "@/lib/api/custom-axios-request";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -49,7 +49,7 @@ export default function SignInForm() {
     setError(null);
 
     try {
-      const response = await axios.post(API.AUTH.LOGIN, values);
+      const response = await axiosWithCredentials.post(API.AUTH.LOGIN, values);
   
       // store accessToken in redux store
       if (response.data.accessToken) {       
