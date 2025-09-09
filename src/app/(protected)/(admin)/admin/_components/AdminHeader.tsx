@@ -9,10 +9,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { resetUser } from '@/redux/slices/userSlice';
 import { useRouter } from 'next/navigation';
+import useAttemptLogin from '@/hooks/auth/useAttemptLogin';
 
 export default function AdminHeader() {
+
+  useAttemptLogin();
+  // const { isAttemptingLogin, error, attemptSuccess } = await useAttemptLogin();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -21,7 +28,7 @@ export default function AdminHeader() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
