@@ -20,10 +20,18 @@ import { AxiosError } from "axios";
 import { API } from "@/lib/constants";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setAuthState } from "@/redux/slices/authSlice"
+import { setUser } from "@/redux/slices/userSlice"
 
 export default function SignInForm() {
    // useRedirectIfLoggedIn();
-  
+
+   const user  = useSelector((state: RootState) => state.user)
+   const auth = useSelector((state: RootState) => state.auth)
+
+  const dispatch = useDispatch();
   const [isPosting, setIsPosting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -40,32 +48,23 @@ export default function SignInForm() {
     setIsPosting(true);
     setError(null);
 
-    console.log(values);
-
-    //temprory login logic for demonstaration purpose
-    if(values.email === "abhishek@demo.com" && values.password === "123@456") {
-      setError("Login successful!");
-      setIsPosting(false);
-      //redirect to admin dashboard
-      router.push("/admin");
-      return;
-    } else {
-      setError("Invalid email or password. Please try again.");
-      setIsPosting(false);
-      form.setError("password", {
-        type: "manual",
-        message: "Invalid email or password. Please try again."
-      });
-    }
-  
-    return;
-
     try {
       const response = await axios.post(API.AUTH.LOGIN, values);
   
       // store accessToken in redux store
       if (response.data.accessToken) {       
-        console.log("Sign-in Response:\nAccessToken:",response.data.accessToken);
+        // console.log("Sign-in Response:\nAccessToken:",response.data.accessToken);
+        dispatch(setAuthState({isAuthenticated: true, accessToken: response.data.accessToken}));
+        dispatch(setUser({...response.data.user}))
+
+        console.log("user type = ",response.data.user.type);
+        // redirect to admin dashboard if user is admin
+        if(response.data.user.userType === "ADMIN") {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
+
       }
 
       setError("Sign-in successful!");

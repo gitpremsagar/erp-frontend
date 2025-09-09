@@ -5,8 +5,8 @@ export const API_URL = `${BASE_API_URL}/api`;
 
 export const API = {
     AUTH:{
-        LOGIN: `${API_URL}/auth/login`,
-        SIGNUP: `${API_URL}/auth/signup`,
+        LOGIN: `${API_URL}/auth/log-in`,
+        SIGNUP: `${API_URL}/auth/sign-up`,
         REFRESH_ACCESS_TOKEN: `${API_URL}/auth/refresh-access-token`,
         FORGOT_PASSWORD: `${API_URL}/auth/forgot-password`,
         RESET_PASSWORD: `${API_URL}/auth/reset-password`,
