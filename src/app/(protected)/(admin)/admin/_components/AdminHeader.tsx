@@ -1,15 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, User, Bell, Search } from 'lucide-react';
+import { Menu, X, User, Bell, Search, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { resetUser } from '@/redux/slices/userSlice';
+import { useRouter } from 'next/navigation';
 
 export default function AdminHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+  const router = useRouter();
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +42,11 @@ export default function AdminHeader() {
   const navigation = [
     { name: 'Home', href: '/', current: false },
   ];
+
+  const handleLogout = () => {
+    dispatch(resetUser());
+    router.push('/log-in');
+  };
 
   return (
     <header className={`bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-all duration-300 ${
@@ -93,12 +104,24 @@ export default function AdminHeader() {
             {/* User Menu */}
             <div className="flex items-center space-x-2">
               <div className="hidden md:block text-right">
-                <p className="text-sm font-medium text-gray-900">Admin User</p>
-                <p className="text-xs text-gray-500">admin@edigital.com</p>
+                <p className="text-sm font-medium text-gray-900">{user.user?.name}</p>
+                <p className="text-xs text-gray-500">{user.user?.email}</p>
               </div>
               <Button variant="ghost" size="sm" className="hidden sm:flex">
                 <User className="h-5 w-5 text-gray-600" />
               </Button>
+              {/* Logout Button - Show only when user is authenticated */}
+              {user.user && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={handleLogout}
+                  className="hidden sm:flex text-red-600 hover:text-red-700 hover:bg-red-50"
+                  title="Logout"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -161,8 +184,8 @@ export default function AdminHeader() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Admin User</p>
-                    <p className="text-xs text-gray-500">admin@edigital.com</p>
+                    <p className="text-sm font-medium text-gray-900">{user.user?.name || 'Admin User'}</p>
+                    <p className="text-xs text-gray-500">{user.user?.email || 'admin@edigital.com'}</p>
                   </div>
                 </div>
               </div>
@@ -175,6 +198,20 @@ export default function AdminHeader() {
                   <span className="ml-auto h-3 w-3 bg-red-500 rounded-full"></span>
                 </Button>
               </div>
+
+              {/* Mobile Logout Button - Show only when user is authenticated */}
+              {user.user && (
+                <div className="px-3 py-2">
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="h-5 w-5 text-red-600 mr-2" />
+                    <span>Logout</span>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         )}
