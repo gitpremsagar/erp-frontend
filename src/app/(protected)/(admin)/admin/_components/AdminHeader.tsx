@@ -1,68 +1,63 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Menu, X, User, Bell, Search, LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/redux/store';
-import useAttemptLogin from '@/hooks/auth/useAttemptLogin';
-import useLogOut from '@/hooks/auth/useLogOut';
+import { useState, useEffect } from "react";
+import { Menu, X, User, Bell, Search, LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
+import useAttemptLogin from "@/hooks/auth/useAttemptLogin";
+import useLogOut from "@/hooks/auth/useLogOut";
 
 export default function AdminHeader() {
-
   const { isAttemptingLogin, error, attemptSuccess } = useAttemptLogin();
   const { logOut, isLoggingOut, error: logoutError } = useLogOut();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  
-  
+
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      if (isMenuOpen && !target.closest('.mobile-menu')) {
+      if (isMenuOpen && !target.closest(".mobile-menu")) {
         setIsMenuOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
 
-  const navigation = [
-    { name: 'Home', href: '/', current: false },
-  ];
+  const navigation = [{ name: "Home", href: "/", current: false }];
 
   const handleLogout = async () => {
     logOut();
   };
 
-  // TODO: add proper loading state
-  if(isAttemptingLogin) {
-    return <div>Loading...</div>;
-  }
 
   return (
-    <header className={`bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'shadow-lg' : 'shadow-sm'
-    }`}>
+    <>
+      <header
+        className={`bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? "shadow-lg" : "shadow-sm"
+        }`}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
@@ -70,7 +65,9 @@ export default function AdminHeader() {
             <div className="flex-shrink-0">
               <div className="flex items-center space-x-2">
                 <Image src="/logo.jpeg" alt="Logo" width={32} height={32} />
-                <span className="text-lg sm:text-xl font-bold text-gray-900">Sri Gopal Traders</span>
+                <span className="text-lg sm:text-xl font-bold text-gray-900">
+                  Sri Gopal Traders
+                </span>
               </div>
             </div>
           </div>
@@ -83,8 +80,8 @@ export default function AdminHeader() {
                 href={item.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   item.current
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                 }`}
               >
                 {item.name}
@@ -107,7 +104,11 @@ export default function AdminHeader() {
             </div>
 
             {/* Notifications - Hidden on small screens */}
-            <Button variant="ghost" size="sm" className="relative hidden sm:flex">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="relative hidden sm:flex"
+            >
               <Bell className="h-5 w-5 text-gray-600" />
               <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
             </Button>
@@ -115,7 +116,9 @@ export default function AdminHeader() {
             {/* User Menu */}
             <div className="flex items-center space-x-2">
               <div className="hidden md:block text-right">
-                <p className="text-sm font-medium text-gray-900">{user.user?.name}</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {user.user?.name}
+                </p>
                 <p className="text-xs text-gray-500">{user.user?.email}</p>
               </div>
               <Button variant="ghost" size="sm" className="hidden sm:flex">
@@ -123,9 +126,9 @@ export default function AdminHeader() {
               </Button>
               {/* Logout Button - Show only when user is authenticated */}
               {user.user && (
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={handleLogout}
                   className="hidden sm:flex text-red-600 hover:text-red-700 hover:bg-red-50"
                   title="Logout"
@@ -177,8 +180,8 @@ export default function AdminHeader() {
                   href={item.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     item.current
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -195,8 +198,12 @@ export default function AdminHeader() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{user.user?.name || 'Admin User'}</p>
-                    <p className="text-xs text-gray-500">{user.user?.email || 'admin@edigital.com'}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {user.user?.name || "Admin User"}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {user.user?.email || "admin@edigital.com"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -213,8 +220,8 @@ export default function AdminHeader() {
               {/* Mobile Logout Button - Show only when user is authenticated */}
               {user.user && (
                 <div className="px-3 py-2">
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
                     onClick={handleLogout}
                   >
@@ -228,5 +235,25 @@ export default function AdminHeader() {
         )}
       </div>
     </header>
+
+    {/* Full-page loading overlay - only show when attempting login */}
+    {isAttemptingLogin && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
+        <div className="bg-white rounded-lg p-8 max-w-sm w-full mx-4 shadow-xl">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="text-center">
+              <h3 className="text-lg font-medium text-gray-900">
+                Authenticating...
+              </h3>
+              <p className="text-sm text-gray-500 mt-1">
+                Please wait while we verify your credentials
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+  </>
   );
 }

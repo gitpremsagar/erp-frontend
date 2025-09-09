@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SigninFormSchema } from "@/lib/Schemas/signinForm.schema";
+import { SigninFormSchema } from "@/lib/schemas/signinForm.schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -57,7 +57,6 @@ export default function SignInForm() {
         dispatch(setAuthState({isAuthenticated: true, accessToken: response.data.accessToken}));
         dispatch(setUser({...response.data.user}))
 
-        console.log("user type = ",response.data.user.type);
         // redirect to admin dashboard if user is admin
         if(response.data.user.userType === "ADMIN") {
           router.push("/admin");
