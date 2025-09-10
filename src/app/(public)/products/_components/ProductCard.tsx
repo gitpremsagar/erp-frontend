@@ -4,10 +4,19 @@ import { Heart, Package, Tag, Weight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-import { Product } from './types';
+import { Product } from '@/lib/types/products/Product.type';
+
+// Extended Product type with computed fields for public display
+interface ExtendedProduct extends Product {
+  stock: number;
+  inStock: boolean;
+  isNew: boolean;
+  isFeatured: boolean;
+  tags: string[];
+}
 
 interface ProductCardProps {
-  product: Product;
+  product: ExtendedProduct;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {

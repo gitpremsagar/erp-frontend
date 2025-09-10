@@ -1,13 +1,14 @@
 import React from 'react';
 import { AlertTriangle, Package, TrendingUp } from 'lucide-react';
-import { ApiProduct } from '@/lib/types/products/ApiProductsResponse.type';
+import { Product } from '@/lib/types/products/Product.type';
 
 interface StockAlertProps {
-  product: ApiProduct;
+  product: Product;
 }
 
 export default function StockAlert({ product }: StockAlertProps) {
-  const { stock, lowStockLimit, overStockLimit } = product;
+  const stock = product.Stock[0]?.stockQuantity || 0;
+  const { lowStockLimit, overStockLimit } = product;
   
   // Determine stock status and styling
   let icon = <Package className="w-4 h-4" />;
@@ -17,21 +18,19 @@ export default function StockAlert({ product }: StockAlertProps) {
   let message = 'In Stock';
   
   if (stock <= lowStockLimit) {
-    status = 'low';
     icon = <AlertTriangle className="w-4 h-4" />;
     bgColor = 'bg-red-100';
     textColor = 'text-red-800';
     borderColor = 'border-red-200';
-    message = product.lowStockAlertMessage || 'Low Stock Alert';
+    message = 'Low Stock Alert';
   } else if (stock >= overStockLimit) {
-    status = 'over';
     icon = <TrendingUp className="w-4 h-4" />;
     bgColor = 'bg-amber-100';
     textColor = 'text-amber-800';
     borderColor = 'border-amber-200';
-    message = product.overStockAlertMessage || 'Over Stock Alert';
+    message = 'Over Stock Alert';
   } else {
-    message = product.inStockAlertMessage || 'In Stock';
+    message = 'In Stock';
   }
 
   return (

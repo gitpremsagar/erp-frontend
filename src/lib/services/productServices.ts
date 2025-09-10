@@ -1,9 +1,9 @@
 import { customAxios } from '../api/custom-axios-request';
 import { API } from '../constants';
-import { ApiProduct, ApiProductsResponse, GetProductsParams } from '@/app/(public)/products/_components/types';
+import { Product, ProductsResponse, GetProductsParams } from '@/lib/types/products/Product.type';
 
 export const productServices = {
-  async getProducts(params: GetProductsParams = {}): Promise<ApiProductsResponse> {
+  async getProducts(params: GetProductsParams = {}): Promise<ProductsResponse> {
     try {
       const queryParams = new URLSearchParams();
       
@@ -25,7 +25,7 @@ export const productServices = {
     }
   },
 
-  async getProductById(id: string): Promise<ApiProduct> {
+  async getProductById(id: string): Promise<Product> {
     try {
       const url = API.PRODUCTS.GET_PRODUCT_BY_ID.replace(':id', id);
       const response = await customAxios.get(url);
@@ -36,7 +36,7 @@ export const productServices = {
     }
   },
 
-  async getProductsByCategory(category: string): Promise<ApiProductsResponse> {
+  async getProductsByCategory(category: string): Promise<ProductsResponse> {
     try {
       const url = API.PRODUCTS.GET_PRODUCT_BY_CATEGORY.replace(':category', category);
       const response = await customAxios.get(url);
@@ -47,7 +47,7 @@ export const productServices = {
     }
   },
 
-  async getProductsBySubCategory(subCategory: string): Promise<ApiProductsResponse> {
+  async getProductsBySubCategory(subCategory: string): Promise<ProductsResponse> {
     try {
       const url = API.PRODUCTS.GET_PRODUCT_BY_SUB_CATEGORY.replace(':subCategory', subCategory);
       const response = await customAxios.get(url);
@@ -58,13 +58,33 @@ export const productServices = {
     }
   },
 
-  async updateProduct(id: string, data: Partial<ApiProduct>): Promise<ApiProduct> {
+  async createProduct(data: Partial<Product>): Promise<Product> {
+    try {
+      const response = await customAxios.post(API.PRODUCTS.CREATE_PRODUCT, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating product:', error);
+      throw error;
+    }
+  },
+
+  async updateProduct(id: string, data: Partial<Product>): Promise<Product> {
     try {
       const url = API.PRODUCTS.UPDATE_PRODUCT.replace(':id', id);
       const response = await customAxios.put(url, data);
       return response.data;
     } catch (error) {
       console.error('Error updating product:', error);
+      throw error;
+    }
+  },
+
+  async deleteProduct(id: string): Promise<void> {
+    try {
+      const url = API.PRODUCTS.DELETE_PRODUCT.replace(':id', id);
+      await customAxios.delete(url);
+    } catch (error) {
+      console.error('Error deleting product:', error);
       throw error;
     }
   }

@@ -2,10 +2,19 @@
 
 import { Package, Loader2, AlertCircle } from 'lucide-react';
 import ProductCard from './ProductCard';
-import { Product } from './types';
+import { Product } from '@/lib/types/products/Product.type';
+
+// Extended Product type with computed fields for public display
+interface ExtendedProduct extends Product {
+  stock: number;
+  inStock: boolean;
+  isNew: boolean;
+  isFeatured: boolean;
+  tags: string[];
+}
 
 interface ProductsGridProps {
-  products: Product[];
+  products: ExtendedProduct[];
   totalProducts: number;
   loading?: boolean;
   error?: string | null;
