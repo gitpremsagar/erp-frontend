@@ -14,7 +14,8 @@ import {
   Building2,
   // DollarSign
   Bell,
-  MessageCircle
+  MessageCircle,
+  Truck
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -34,6 +35,7 @@ const navigation: NavItem[] = [
   { name: 'Chat', href: '/admin/chat', icon: MessageCircle },
   { name: 'Reports', href: '/admin/reports', icon: BarChart3 },
   { name: 'Customers', href: '/admin/customers', icon: Users },
+  { name: 'Vehicles', href: '/admin/vehicles', icon: Truck },
   { name: 'Notifications', href: '/admin/notifications', icon: Bell, badge: '5' },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];

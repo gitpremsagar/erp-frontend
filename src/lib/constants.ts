@@ -30,6 +30,13 @@ export const API = {
         UPDATE_CUSTOMER: `${API_URL}/customers/:id`,
         DELETE_CUSTOMER: `${API_URL}/customers/:id`,
     },
+    VEHICLES: {
+        CREATE_VEHICLE: `${API_URL}/vehicles`,
+        GET_ALL_VEHICLES: `${API_URL}/vehicles`,
+        GET_VEHICLE_BY_ID: `${API_URL}/vehicles/:id`,
+        UPDATE_VEHICLE: `${API_URL}/vehicles/:id`,
+        DELETE_VEHICLE: `${API_URL}/vehicles/:id`,
+    },
     ORDERS: {
         GET_ALL_ORDERS: `${API_URL}/orders`,
         GET_ORDER_BY_ID: `${API_URL}/orders/:id`,
