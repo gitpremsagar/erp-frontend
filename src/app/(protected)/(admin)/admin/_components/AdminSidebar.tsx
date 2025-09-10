@@ -16,7 +16,8 @@ import {
   Bell,
   MessageCircle,
   Truck,
-  ShoppingBag
+  ShoppingBag,
+  Tag
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -32,6 +33,7 @@ interface NavItem {
 const navigation: NavItem[] = [
   { name: 'Dashboard', href: '/admin', icon: Home },
   { name: 'Products', href: '/admin/products', icon: ShoppingBag },
+  { name: 'Tags', href: '/admin/tags', icon: Tag },
   { name: 'Stock', href: '/admin/stock', icon: Package },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
   { name: 'Chat', href: '/admin/chat', icon: MessageCircle },

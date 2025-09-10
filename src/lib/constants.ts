@@ -23,6 +23,13 @@ export const API = {
         UPDATE_PRODUCT: `${API_URL}/products/:id`,
         DELETE_PRODUCT: `${API_URL}/products/:id`,
     },
+    PRODUCT_TAGS: {
+        CREATE_PRODUCT_TAG: `${API_URL}/product-tags`,
+        GET_ALL_PRODUCT_TAGS: `${API_URL}/product-tags`,
+        GET_PRODUCT_TAG_BY_ID: `${API_URL}/product-tags/:id`,
+        UPDATE_PRODUCT_TAG: `${API_URL}/product-tags/:id`,
+        DELETE_PRODUCT_TAG: `${API_URL}/product-tags/:id`
+    },
     CUSTOMERS: {
         CREATE_CUSTOMER: `${API_URL}/customers`,
         GET_ALL_CUSTOMERS: `${API_URL}/customers`,

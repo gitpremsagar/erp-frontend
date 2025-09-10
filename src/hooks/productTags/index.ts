@@ -1,0 +1,1 @@
+export { useProductTags } from './useProductTags';
