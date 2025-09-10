@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Search, Filter, Plus, Download, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
 
 export default function CustomersSearchAndActions() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,10 +53,12 @@ export default function CustomersSearchAndActions() {
             <Download className="w-4 h-4" />
             Export
           </Button>
-          <Button size="sm" className="flex items-center gap-2">
-            <Plus className="w-4 h-4" />
-            Add Customer
-          </Button>
+          <Link href="/admin/customers/add-new-customer">
+            <Button size="sm" className="flex items-center gap-2">
+              <Plus className="w-4 h-4" />
+              Add Customer
+            </Button>
+          </Link>
         </div>
       </div>
 

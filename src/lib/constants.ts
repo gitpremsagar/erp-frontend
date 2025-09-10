@@ -24,6 +24,7 @@ export const API = {
         DELETE_PRODUCT: `${API_URL}/products/:id`,
     },
     CUSTOMERS: {
+        CREATE_CUSTOMER: `${API_URL}/customers`,
         GET_ALL_CUSTOMERS: `${API_URL}/customers`,
         GET_CUSTOMER_BY_ID: `${API_URL}/customers/:id`,
         UPDATE_CUSTOMER: `${API_URL}/customers/:id`,
