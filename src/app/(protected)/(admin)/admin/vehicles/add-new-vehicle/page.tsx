@@ -79,7 +79,7 @@ export default function AddNewVehicle() {
                         <Input placeholder="Enter vehicle name" {...field} />
                       </FormControl>
                       <FormDescription>
-                        A descriptive name for the vehicle (e.g., "Delivery Truck #1").
+                        A descriptive name for the vehicle (e.g., &quot;Delivery Truck #1&quot;).
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
