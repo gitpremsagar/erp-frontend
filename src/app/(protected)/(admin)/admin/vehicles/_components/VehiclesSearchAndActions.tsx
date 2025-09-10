@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Plus, Search, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function VehiclesSearchAndActions() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [vehicleTypeFilter, setVehicleTypeFilter] = useState('all');
 
@@ -43,7 +45,10 @@ export default function VehiclesSearchAndActions() {
           </div>
         </div>
         <div className="flex gap-2">
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button 
+            className="bg-blue-600 hover:bg-blue-700"
+            onClick={() => router.push('/admin/vehicles/add-new-vehicle')}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Vehicle
           </Button>
