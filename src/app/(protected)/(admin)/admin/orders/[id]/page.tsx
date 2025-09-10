@@ -19,7 +19,6 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import AdminHeader from '../../_components/AdminHeader';
 import AdminSidebar from '../../_components/AdminSidebar';
 import { useOrderItems } from '@/lib/hooks/useOrderItems';
 import { OrderItem } from '@/lib/services/orderItemServices';
@@ -362,7 +361,7 @@ export default function OrderDetailsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AdminHeader />
+
         <div className="flex h-[calc(100vh-64px)]">
           <AdminSidebar />
           <div className="flex-1 overflow-auto">
@@ -386,7 +385,6 @@ export default function OrderDetailsPage() {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AdminHeader />
         <div className="flex h-[calc(100vh-64px)]">
           <AdminSidebar />
           <div className="flex-1 overflow-auto">
@@ -413,7 +411,6 @@ export default function OrderDetailsPage() {
   if (!orderItems.length && !loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AdminHeader />
         <div className="flex h-[calc(100vh-64px)]">
           <AdminSidebar />
           <div className="flex-1 overflow-auto">
@@ -444,7 +441,6 @@ export default function OrderDetailsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminHeader />
       <div className="flex h-[calc(100vh-64px)]">
         <AdminSidebar />
         <div className="flex-1 overflow-auto">

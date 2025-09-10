@@ -1,4 +1,4 @@
-import AdminHeader from "../../_components/AdminHeader";
+
 import AdminSidebar from "../../_components/AdminSidebar";
 import { Button } from "@/components/ui/button";
 
@@ -9,7 +9,7 @@ interface StockErrorProps {
 export default function StockError({ error }: StockErrorProps) {
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminHeader />
+        
       <div className="flex h-[calc(100vh-64px)]">
         <AdminSidebar />
         <div className="flex-1 overflow-auto">

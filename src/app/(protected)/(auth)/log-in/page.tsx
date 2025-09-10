@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SigninFormSchema } from "@/lib/Schemas/signinForm.schema";
+import { SigninFormSchema } from "@/lib/schemas/signinForm.schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,7 +18,7 @@ import { useState } from "react";
 import { EyeOff, Eye, Loader2 } from "lucide-react";
 import { AxiosError } from "axios";
 import { API } from "@/lib/constants";
-import axios from "axios";
+import { axiosWithCredentials } from "@/lib/api/custom-axios-request";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -49,7 +49,7 @@ export default function SignInForm() {
     setError(null);
 
     try {
-      const response = await axios.post(API.AUTH.LOGIN, values);
+      const response = await axiosWithCredentials.post(API.AUTH.LOGIN, values);
   
       // store accessToken in redux store
       if (response.data.accessToken) {       
@@ -57,7 +57,6 @@ export default function SignInForm() {
         dispatch(setAuthState({isAuthenticated: true, accessToken: response.data.accessToken}));
         dispatch(setUser({...response.data.user}))
 
-        console.log("user type = ",response.data.user.type);
         // redirect to admin dashboard if user is admin
         if(response.data.user.userType === "ADMIN") {
           router.push("/admin");

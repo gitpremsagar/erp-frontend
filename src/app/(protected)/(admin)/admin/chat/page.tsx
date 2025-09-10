@@ -8,7 +8,7 @@ import { ChatProvider } from "./_components/ChatContext";
 export default function ChatPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminHeader />
+      
       <div className="flex h-[calc(100vh-64px)]">
         <AdminSidebar />
         <ChatProvider>
