@@ -73,10 +73,10 @@ export default function AddNewCustomer() {
                     <FormItem>
                       <FormLabel>Full Name *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter customer's full name" {...field} />
+                        <Input placeholder="Enter customer&apos;s full name" {...field} />
                       </FormControl>
                       <FormDescription>
-                        Customer's complete name as it appears on official documents.
+                        Customer&apos;s complete name as it appears on official documents.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -89,10 +89,10 @@ export default function AddNewCustomer() {
                     <FormItem>
                       <FormLabel>Email Address *</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="Enter customer's email" {...field} />
+                        <Input type="email" placeholder="Enter customer&apos;s email" {...field} />
                       </FormControl>
                       <FormDescription>
-                        Customer's primary email address for communication.
+                        Customer&apos;s primary email address for communication.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -107,10 +107,10 @@ export default function AddNewCustomer() {
                     <FormItem>
                       <FormLabel>Phone Number *</FormLabel>
                       <FormControl>
-                        <Input type="tel" placeholder="Enter customer's phone number" {...field} />
+                        <Input type="tel" placeholder="Enter customer&apos;s phone number" {...field} />
                       </FormControl>
                       <FormDescription>
-                        Customer's primary contact number.
+                        Customer&apos;s primary contact number.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -123,10 +123,10 @@ export default function AddNewCustomer() {
                     <FormItem>
                       <FormLabel>Password *</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="Enter customer's password" {...field} />
+                        <Input type="password" placeholder="Enter customer&apos;s password" {...field} />
                       </FormControl>
                       <FormDescription>
-                        Customer's login password (minimum 6 characters).
+                        Customer&apos;s login password (minimum 6 characters).
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -140,10 +140,10 @@ export default function AddNewCustomer() {
                   <FormItem>
                     <FormLabel>Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter customer's address" {...field} />
+                      <Input placeholder="Enter customer&apos;s address" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Customer's complete address (optional).
+                      Customer&apos;s complete address (optional).
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
