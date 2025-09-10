@@ -9,9 +9,10 @@ import {
   TagsTable 
 } from "./_components";
 import { useProductTags } from "@/hooks/productTags";
+import { ProductTag } from "@/lib/types/products/ProductTag.type";
 
 export default function TagsPage() {
-  const { productTags, loading, error, pagination, refreshProductTags, deleteProductTag } = useProductTags();
+  const { productTags, loading, error, refreshProductTags, deleteProductTag } = useProductTags();
   const [searchTerm, setSearchTerm] = useState('');
 
   // Calculate stats from tags
@@ -64,12 +65,12 @@ export default function TagsPage() {
     console.log('Add tag clicked');
   };
 
-  const handleEditTag = (tag: any) => {
+  const handleEditTag = (tag: ProductTag) => {
     // TODO: Implement edit tag functionality
     console.log('Edit tag:', tag);
   };
 
-  const handleViewTag = (tag: any) => {
+  const handleViewTag = (tag: ProductTag) => {
     // TODO: Implement view tag functionality
     console.log('View tag:', tag);
   };
