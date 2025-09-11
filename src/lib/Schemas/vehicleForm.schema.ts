@@ -12,7 +12,7 @@ export const CreateVehicleSchema = z.object({
     .min(1, "Vehicle number is required")
     .max(20, "Vehicle number must be at most 20 characters long")
     .trim(),
-  vehicleType: z.enum(["TRUCK", "PICKUP", "OTHER"]),
+  vehicleType: z.enum(["TRUCK", "PICKUP", "VAN", "CAR"]),
   capacity: z
     .number()
     .int("Capacity must be a whole number")

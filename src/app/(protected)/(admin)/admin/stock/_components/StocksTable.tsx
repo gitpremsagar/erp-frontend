@@ -10,7 +10,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { ApiProduct } from '@/lib/types/products/ApiProductsResponse.type';
+import { Product } from '@/lib/types/products/Product.type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -18,8 +18,8 @@ import { ArrowUpDown, Package, Edit } from 'lucide-react';
 import StockAlert from './StockAlert';
 
 interface StocksTableProps {
-  data: ApiProduct[];
-  onUpdateStock: (product: ApiProduct) => void;
+  data: Product[];
+  onUpdateStock: (product: Product) => void;
 }
 
 export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
@@ -27,19 +27,19 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [groupFilter, setGroupFilter] = React.useState<string>('all');
 
-  // Get unique groups for filter
-  const uniqueGroups = React.useMemo(() => {
-    const groups = data.map(product => product.Group?.name).filter(Boolean);
-    return Array.from(new Set(groups));
+  // Get unique categories for filter
+  const uniqueCategories = React.useMemo(() => {
+    const categories = data.map(product => product.Category?.name).filter(Boolean);
+    return Array.from(new Set(categories));
   }, [data]);
 
-  // Filter data based on group selection
+  // Filter data based on category selection
   const filteredData = React.useMemo(() => {
     if (groupFilter === 'all') return data;
-    return data.filter(product => product.Group?.name === groupFilter);
+    return data.filter(product => product.Category?.name === groupFilter);
   }, [data, groupFilter]);
 
-  const columns = React.useMemo<ColumnDef<ApiProduct>[]>(
+  const columns = React.useMemo<ColumnDef<Product>[]>(
     () => [
       {
         accessorKey: 'mrp',
@@ -80,16 +80,16 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         },
       },
       {
-        accessorKey: 'Group.name',
-        header: 'Group',
+        accessorKey: 'Category.name',
+        header: 'Category',
         cell: ({ row }) => (
           <div className="text-sm text-gray-900">
-            {row.original.Group?.name || 'N/A'}
+            {row.original.Category?.name || 'N/A'}
           </div>
         ),
       },
       {
-        accessorKey: 'stock',
+        accessorKey: 'Stock',
         header: ({ column }) => (
           <button
             className="flex items-center gap-1"
@@ -100,7 +100,7 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
           </button>
         ),
         cell: ({ row }) => {
-          const stock = row.original.stock;
+          const stock = row.original.Stock[0]?.stockQuantity || 0;
           return (
             <div className="flex items-center gap-2">
               <Package className="w-4 h-4 text-gray-400" />
@@ -119,19 +119,10 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         ),
       },
       {
-        accessorKey: 'expiryDate',
-        header: 'Expiry',
-        cell: ({ getValue }) => (
-          <span className="text-sm text-gray-700">
-            {new Date(String(getValue())).toLocaleDateString()}
-          </span>
-        ),
-      },
-      {
         accessorKey: 'grammage',
         header: 'Grammage',
         cell: ({ getValue }) => (
-          <span className="text-sm text-gray-700">{getValue() as string}g</span>
+          <span className="text-sm text-gray-700">{getValue() as number}g</span>
         ),
       },
       {
@@ -178,13 +169,13 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
           />
           <Select value={groupFilter} onValueChange={setGroupFilter}>
             <SelectTrigger className="w-48">
-              <SelectValue placeholder="Filter by Group" />
+              <SelectValue placeholder="Filter by Category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Groups</SelectItem>
-              {uniqueGroups.map((group) => (
-                <SelectItem key={group} value={group}>
-                  {group}
+              <SelectItem value="all">All Categories</SelectItem>
+              {uniqueCategories.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
                 </SelectItem>
               ))}
             </SelectContent>

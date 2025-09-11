@@ -1,12 +1,21 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Product, Category, GetProductsParams } from '@/app/(public)/products/_components/types';
+import { Product, Category, GetProductsParams } from '@/lib/types/products/Product.type';
 import { productServices } from '@/lib/services/productServices';
+
+// Extended Product type with computed fields for public display
+interface ExtendedProduct extends Product {
+  stock: number;
+  inStock: boolean;
+  isNew: boolean;
+  isFeatured: boolean;
+  tags: string[];
+}
 
 export function useProducts() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ExtendedProduct[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,12 +43,23 @@ export function useProducts() {
         sortOrder: params.sortOrder || 'asc'
       });
 
-      setProducts(response.products.map(product => ({
-        ...product,
-        inStock: product.stock > 0,
-        isNew: new Date(product.stockEntryDate) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days
-        isFeatured: product.stock > product.lowStockLimit && product.stock < product.overStockLimit
-      })));
+      // Transform products to include computed fields
+      const extendedProducts: ExtendedProduct[] = response.products.map(product => {
+        const stock = product.Stock[0]?.stockQuantity || 0;
+        const isNew = new Date(product.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days
+        const isFeatured = stock > product.lowStockLimit && stock < product.overStockLimit;
+        
+        return {
+          ...product,
+          stock,
+          inStock: stock > 0,
+          isNew,
+          isFeatured,
+          tags: product.ProductTagRelation?.map(relation => relation.ProductTag.name) || []
+        };
+      });
+      
+      setProducts(extendedProducts);
       
       setPagination(response.pagination);
       
@@ -101,10 +121,8 @@ export function useProducts() {
           return b.stock - a.stock;
         case 'stock-low':
           return a.stock - b.stock;
-        case 'expiry-soon':
-          return new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime();
         case 'newest':
-          return new Date(b.stockEntryDate).getTime() - new Date(a.stockEntryDate).getTime();
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         default:
           return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
       }

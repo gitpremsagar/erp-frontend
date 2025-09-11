@@ -7,7 +7,7 @@ import StocksHeader from "@/app/(protected)/(admin)/admin/stock/_components/Stoc
 import StocksTable from "@/app/(protected)/(admin)/admin/stock/_components/StocksTable";
 import StockLoading from "@/app/(protected)/(admin)/admin/stock/_components/StockLoading";
 import StockError from "@/app/(protected)/(admin)/admin/stock/_components/StockError";
-import { ApiProduct } from "@/lib/types/products/ApiProductsResponse.type";
+import { Product } from "@/lib/types/products/Product.type";
 import { productServices } from "@/lib/services/productServices";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,10 +16,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { toast } from "sonner";
 
 export default function StockPage() {
-  const [products, setProducts] = useState<ApiProduct[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<ApiProduct | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
   const [newStock, setNewStock] = useState<number>(0);
 
@@ -44,9 +44,9 @@ export default function StockPage() {
     fetchProducts();
   }, []);
 
-  const handleUpdateStock = (product: ApiProduct) => {
+  const handleUpdateStock = (product: Product) => {
     setSelectedProduct(product);
-    setNewStock(product.stock);
+    setNewStock(product.Stock[0]?.stockQuantity || 0);
     setIsUpdateDialogOpen(true);
   };
 
@@ -55,12 +55,24 @@ export default function StockPage() {
 
     try {
       // Call API to update stock
-      await productServices.updateProduct(selectedProduct.id, { stock: newStock });
+      const updatedStock = {
+        ...selectedProduct.Stock[0],
+        stockQuantity: newStock
+      };
+      await productServices.updateProduct(selectedProduct.id, { 
+        Stock: [updatedStock] 
+      });
       
       // Update local state after successful API call
       const updatedProducts = products.map(product =>
         product.id === selectedProduct.id
-          ? { ...product, stock: newStock }
+          ? { 
+              ...product, 
+              Stock: [{ 
+                ...product.Stock[0], 
+                stockQuantity: newStock 
+              }] 
+            }
           : product
       );
       
@@ -106,7 +118,7 @@ export default function StockPage() {
               <Label htmlFor="currentStock">Current Stock</Label>
               <Input
                 id="currentStock"
-                value={selectedProduct?.stock || 0}
+                value={selectedProduct?.Stock[0]?.stockQuantity || 0}
                 disabled
                 className="mt-1"
               />

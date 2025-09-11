@@ -17,8 +17,7 @@ export const CreateCustomerSchema = z.object({
     .trim(),
   password: z
     .string()
-    .min(6, "Password must be at least 6 characters long")
-    .optional(),
+    .min(6, "Password must be at least 6 characters long"),
   address: z
     .string()
     .min(1, "Address is required")
@@ -26,10 +25,13 @@ export const CreateCustomerSchema = z.object({
     .trim()
     .optional(),
   aadharNumber: z
-    .number()
-    .int("Aadhar number must be an integer")
-    .positive("Aadhar number must be positive")
-    .optional(),
+    .string()
+    .optional()
+    .refine((val) => {
+      if (!val || val === "") return true;
+      const num = Number(val);
+      return !isNaN(num) && num > 0 && Number.isInteger(num);
+    }, "Aadhar number must be a positive integer"),
   pan: z
     .string()
     .min(10, "PAN must be 10 characters long")
@@ -69,10 +71,13 @@ export const UpdateCustomerSchema = z.object({
     .trim()
     .optional(),
   aadharNumber: z
-    .number()
-    .int("Aadhar number must be an integer")
-    .positive("Aadhar number must be positive")
-    .optional(),
+    .string()
+    .optional()
+    .refine((val) => {
+      if (!val || val === "") return true;
+      const num = Number(val);
+      return !isNaN(num) && num > 0 && Number.isInteger(num);
+    }, "Aadhar number must be a positive integer"),
   pan: z
     .string()
     .min(10, "PAN must be 10 characters long")
