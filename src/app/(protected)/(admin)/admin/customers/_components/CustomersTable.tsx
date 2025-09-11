@@ -24,11 +24,11 @@ interface CustomersTableProps {
   customers: Customer[];
 }
 
-// Custom filter function for privilege
-const privilegeFilter: FilterFn<Customer> = (row, columnId, filterValue) => {
+// Custom filter function for userType
+const userTypeFilter: FilterFn<Customer> = (row, columnId, filterValue) => {
   if (filterValue === 'all') return true;
   const customer = row.original;
-  return customer.privilege.name === filterValue;
+  return customer.userType === filterValue;
 };
 
 export default function CustomersTable({ customers }: CustomersTableProps) {
@@ -37,14 +37,14 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
 
-  const getPrivilegeBadge = (privilegeName: string) => {
-    const privilegeConfig = {
+  const getUserTypeBadge = (userType: string) => {
+    const userTypeConfig = {
       CUSTOMER: { bg: 'bg-blue-100', text: 'text-blue-800', label: 'Customer' },
       ADMIN: { bg: 'bg-red-100', text: 'text-red-800', label: 'Admin' },
       MANAGER: { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'Manager' }
     };
 
-    const config = privilegeConfig[privilegeName as keyof typeof privilegeConfig] || { bg: 'bg-gray-100', text: 'text-gray-800', label: privilegeName };
+    const config = userTypeConfig[userType as keyof typeof userTypeConfig] || { bg: 'bg-gray-100', text: 'text-gray-800', label: userType };
     return (
       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${config.bg} ${config.text}`}>
         {config.label}
@@ -119,27 +119,49 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
         },
       },
       {
-        accessorKey: 'privilege',
-        id: 'privilege',
+        accessorKey: 'userType',
+        id: 'userType',
         header: 'Role',
-        filterFn: privilegeFilter,
+        filterFn: userTypeFilter,
         cell: ({ row }) => {
           const customer = row.original;
-          return getPrivilegeBadge(customer.privilege.name);
+          return getUserTypeBadge(customer.userType);
+        },
+      },
+      {
+        accessorKey: 'aadharNumber',
+        header: 'Aadhar Number',
+        cell: ({ row }) => {
+          const aadharNumber = row.getValue('aadharNumber') as number | null;
+          return (
+            <div className="text-sm text-gray-900">
+              {aadharNumber ? aadharNumber.toString() : '-'}
+            </div>
+          );
         },
       },
       {
         accessorKey: 'gstNumber',
         header: 'GST Number',
         cell: ({ row }) => {
-          return <div className="text-sm text-gray-900">{row.getValue('gstNumber')}</div>;
+          const gstNumber = row.getValue('gstNumber') as string | null;
+          return (
+            <div className="text-sm text-gray-900">
+              {gstNumber || '-'}
+            </div>
+          );
         },
       },
       {
         accessorKey: 'pan',
         header: 'PAN',
         cell: ({ row }) => {
-          return <div className="text-sm text-gray-900">{row.getValue('pan')}</div>;
+          const pan = row.getValue('pan') as string | null;
+          return (
+            <div className="text-sm text-gray-900">
+              {pan || '-'}
+            </div>
+          );
         },
       },
       {
@@ -253,9 +275,9 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
           </div>
           <div className="flex gap-2">
             <Select
-              value={(table.getColumn('privilege')?.getFilterValue() as string) ?? 'all'}
+              value={(table.getColumn('userType')?.getFilterValue() as string) ?? 'all'}
               onValueChange={(value) => {
-                table.getColumn('privilege')?.setFilterValue(value);
+                table.getColumn('userType')?.setFilterValue(value);
               }}
             >
               <SelectTrigger className="w-[180px]">

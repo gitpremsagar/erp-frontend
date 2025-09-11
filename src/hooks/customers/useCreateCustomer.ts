@@ -17,7 +17,6 @@ export const useCreateCustomer = () => {
       // Transform the data to match the API requirements
       const customerData = {
         ...data,
-        privilegeId: '1', // Default privilege ID - you might want to make this configurable
         aadharNumber: data.aadharNumber ? Number(data.aadharNumber) : null,
         pan: data.pan || '',
         gstNumber: data.gstNumber || '',

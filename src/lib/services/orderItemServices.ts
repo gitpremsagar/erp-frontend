@@ -59,7 +59,6 @@ export interface OrderItemCustomer {
   phone: string;
   name: string;
   password: string;
-  privilegeId: string | null;
   aadharNumber: number | null;
   pan: string | null;
   gstNumber: string | null;

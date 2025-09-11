@@ -4,20 +4,13 @@ export interface Customer {
   phone: string;
   name: string;
   password: string;
-  privilegeId: string;
+  userType: string;
   aadharNumber: number | null;
-  pan: string;
-  gstNumber: string;
+  pan: string | null;
+  gstNumber: string | null;
   address: string;
   createdAt: string;
   updatedAt: string;
-  privilege: {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-  };
 }
 
 export interface CustomersResponse {

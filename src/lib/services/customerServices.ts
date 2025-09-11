@@ -3,7 +3,7 @@ import { CustomersResponse, Customer } from '../types/customers/Customer.type';
 import { axiosWithAccessToken } from '../api/custom-axios-request';
 
 export const customerServices = {
-  createCustomer: async (data: Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | 'privilege'>) => {
+  createCustomer: async (data: Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
       const response = await axiosWithAccessToken.post(API.CUSTOMERS.CREATE_CUSTOMER, data);
       return response.data;
@@ -33,7 +33,7 @@ export const customerServices = {
     }
   },
 
-  updateCustomer: async (id: string, data: Partial<Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | 'privilege'>>) => {
+  updateCustomer: async (id: string, data: Partial<Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>>) => {
     try {
       const response = await axiosWithAccessToken.put(API.CUSTOMERS.UPDATE_CUSTOMER.replace(':id', id), data);
       return response.data;
