@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 import AdminSidebar from "../_components/AdminSidebar";
 import { 
   TagsHeader, 
@@ -18,6 +19,7 @@ export default function TagsPage() {
   const { productTags, isLoading, error, loadProductTags } = useProductTags();
   const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
 
   // Filter tags based on search
@@ -43,8 +45,7 @@ export default function TagsPage() {
   };
 
   const handleAddTag = () => {
-    // TODO: Implement add tag functionality
-    console.log('Add tag clicked');
+    router.push('/admin/tags/add-new-tag');
   };
 
   const handleEditTag = (tag: ProductTag) => {
