@@ -21,8 +21,9 @@ export const fetchCategories = createAsyncThunk(
     try {
       const response = await categoryServices.getCategories({ limit: 1000 }); // Fetch all categories
       return response.categories;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to fetch categories');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch categories';
+      return rejectWithValue(errorMessage);
     }
   }
 );

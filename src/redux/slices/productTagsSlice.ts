@@ -21,8 +21,9 @@ export const fetchProductTags = createAsyncThunk(
     try {
       const response = await productTagServices.getProductTags({ limit: 1000 }); // Fetch all product tags
       return response.productTags;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to fetch product tags');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch product tags';
+      return rejectWithValue(errorMessage);
     }
   }
 );

@@ -21,8 +21,9 @@ export const fetchSubCategories = createAsyncThunk(
     try {
       const response = await subCategoryServices.getSubCategories({ limit: 1000 }); // Fetch all sub-categories
       return response.subCategories;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to fetch sub-categories');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch sub-categories';
+      return rejectWithValue(errorMessage);
     }
   }
 );

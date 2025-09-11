@@ -29,4 +29,4 @@ export { useAppData } from './useAppData';
 export { useAppStore } from './useAppStore';
 
 // Utility hooks
-export { useMobile } from './use-mobile';
+export { useIsMobile } from './use-mobile';
