@@ -40,9 +40,11 @@ export default function AddNewProductTag() {
             await createProductTag(values)
             toast.success("Product tag created successfully!")
             router.push("/admin/tags")
-        } catch (err: any) {
+        } catch (err: unknown) {
             // Check if it's a 409 conflict error
-            if (err?.response?.status === 409) {
+            if (err && typeof err === 'object' && 'response' in err && 
+                err.response && typeof err.response === 'object' && 'status' in err.response && 
+                err.response.status === 409) {
                 toast.error("A product tag with this name already exists. Please choose a different name.")
             } else {
                 toast.error("Unable to create product tag. Please try again.")

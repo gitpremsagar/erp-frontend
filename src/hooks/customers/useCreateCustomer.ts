@@ -22,6 +22,7 @@ export const useCreateCustomer = () => {
         gstNumber: data.gstNumber || '',
         address: data.address || '',
         password: data.password,
+        userType: 'customer', // Default user type for new customers
       };
 
       const response = await customerServices.createCustomer(customerData);

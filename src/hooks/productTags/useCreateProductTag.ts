@@ -21,18 +21,22 @@ export const useCreateProductTag = () => {
       const response = await productTagServices.createProductTag(data);
       dispatch(addProductTag(response));
       return response;
-    } catch (err: any) {
+    } catch (err: unknown) {
       let errorMessage = 'Failed to create product tag';
       
       // Handle specific HTTP status codes
-      if (err?.response?.status === 409) {
-        errorMessage = 'A product tag with this name already exists. Please choose a different name.';
-      } else if (err?.response?.status === 400) {
-        errorMessage = 'Please check your input and try again.';
-      } else if (err?.response?.status === 401) {
-        errorMessage = 'You are not authorized to create product tags.';
-      } else if (err?.response?.status === 500) {
-        errorMessage = 'Server error occurred. Please try again later.';
+      if (err && typeof err === 'object' && 'response' in err && 
+          err.response && typeof err.response === 'object' && 'status' in err.response) {
+        const status = err.response.status;
+        if (status === 409) {
+          errorMessage = 'A product tag with this name already exists. Please choose a different name.';
+        } else if (status === 400) {
+          errorMessage = 'Please check your input and try again.';
+        } else if (status === 401) {
+          errorMessage = 'You are not authorized to create product tags.';
+        } else if (status === 500) {
+          errorMessage = 'Server error occurred. Please try again later.';
+        }
       } else if (err instanceof Error) {
         errorMessage = err.message;
       }
