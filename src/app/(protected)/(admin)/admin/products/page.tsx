@@ -11,7 +11,6 @@ import { useAdminProducts } from "@/hooks/products";
 
 export default function ProductsPage() {
   const { products, loading, error, pagination, refreshProducts, deleteProduct } = useAdminProducts();
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState('all');
 
@@ -31,23 +30,18 @@ export default function ProductsPage() {
     return uniqueSubCategories;
   }, [products]);
 
-  // Filter products based on search and filters
+  // Filter products based on filters
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
-      const matchesSearch = searchTerm === '' || 
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.productCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase());
-      
       const matchesCategory = selectedCategory === 'all' || 
         product.Category.id === selectedCategory;
       
       const matchesSubCategory = selectedSubCategory === 'all' || 
         product.SubCategory.id === selectedSubCategory;
 
-      return matchesSearch && matchesCategory && matchesSubCategory;
+      return matchesCategory && matchesSubCategory;
     });
-  }, [products, searchTerm, selectedCategory, selectedSubCategory]);
+  }, [products, selectedCategory, selectedSubCategory]);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
@@ -70,7 +64,6 @@ export default function ProductsPage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <ProductsHeader />
               <ProductsSearchAndActions
-                onSearch={setSearchTerm}
                 onCategoryFilter={setSelectedCategory}
                 onSubCategoryFilter={setSelectedSubCategory}
                 categories={categories}
@@ -98,7 +91,6 @@ export default function ProductsPage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <ProductsHeader />
               <ProductsSearchAndActions
-                onSearch={setSearchTerm}
                 onCategoryFilter={setSelectedCategory}
                 onSubCategoryFilter={setSelectedSubCategory}
                 categories={categories}
@@ -131,7 +123,6 @@ export default function ProductsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <ProductsHeader />
             <ProductsSearchAndActions
-              onSearch={setSearchTerm}
               onCategoryFilter={setSelectedCategory}
               onSubCategoryFilter={setSelectedSubCategory}
               categories={categories}
