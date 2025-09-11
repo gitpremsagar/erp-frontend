@@ -30,13 +30,27 @@ export const API = {
         UPDATE_PRODUCT_TAG: `${API_URL}/product-tags/:id`,
         DELETE_PRODUCT_TAG: `${API_URL}/product-tags/:id`
     },
+    CATEGORIES: {
+        CREATE_CATEGORY: `${API_URL}/categories`,
+        GET_ALL_CATEGORIES: `${API_URL}/categories`,
+        GET_CATEGORY_BY_ID: `${API_URL}/categories/:id`,
+        UPDATE_CATEGORY: `${API_URL}/categories/:id`,
+        DELETE_CATEGORY: `${API_URL}/categories/:id`,
+    },
+    SUB_CATEGORIES: {
+        CREATE_SUB_CATEGORY: `${API_URL}/sub-categories`,
+        GET_ALL_SUB_CATEGORIES: `${API_URL}/sub-categories`,
+        GET_SUB_CATEGORY_BY_ID: `${API_URL}/sub-categories/:id`,
+        UPDATE_SUB_CATEGORY: `${API_URL}/sub-categories/:id`,
+        DELETE_SUB_CATEGORY: `${API_URL}/sub-categories/:id`,
+    },    
     CUSTOMERS: {
         CREATE_CUSTOMER: `${API_URL}/customers`,
         GET_ALL_CUSTOMERS: `${API_URL}/customers`,
         GET_CUSTOMER_BY_ID: `${API_URL}/customers/:id`,
         UPDATE_CUSTOMER: `${API_URL}/customers/:id`,
         DELETE_CUSTOMER: `${API_URL}/customers/:id`,
-    },
+    },    
     VEHICLES: {
         CREATE_VEHICLE: `${API_URL}/vehicles`,
         GET_ALL_VEHICLES: `${API_URL}/vehicles`,

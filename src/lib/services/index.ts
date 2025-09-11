@@ -4,3 +4,5 @@ export { customerServices } from './customerServices';
 export { productServices } from './productServices';
 export { productTagServices } from './productTagServices';
 export { vehicleServices } from './vehicleServices';
+export { categoryServices } from './categoryServices';
+export { subCategoryServices } from './subCategoryServices';
