@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from "../_components/AdminSidebar";
 import { 
   TagsHeader, 
-  TagsSearchAndActions, 
   TagsTable 
 } from "./_components";
 import { useProductTags } from "@/hooks/productTags";
@@ -17,20 +16,10 @@ import { AppDispatch } from "@/redux/store";
 
 export default function TagsPage() {
   const { productTags, isLoading, error, loadProductTags } = useProductTags();
-  const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
 
-  // Filter tags based on search
-  const filteredTags = useMemo(() => {
-    return productTags.filter(tag => {
-      const matchesSearch = searchTerm === '' || 
-        tag.name.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      return matchesSearch;
-    });
-  }, [productTags, searchTerm]);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this tag?')) {
@@ -66,10 +55,6 @@ export default function TagsPage() {
           <div className="flex-1 overflow-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <TagsHeader onAddTag={handleAddTag} />
-              <TagsSearchAndActions
-                onSearch={setSearchTerm}
-                onAddTag={handleAddTag}
-              />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
@@ -91,10 +76,6 @@ export default function TagsPage() {
           <div className="flex-1 overflow-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <TagsHeader onAddTag={handleAddTag} />
-              <TagsSearchAndActions
-                onSearch={setSearchTerm}
-                onAddTag={handleAddTag}
-              />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
                 <div className="text-center">
                   <div className="text-red-600 text-lg font-medium mb-2">Error loading tags</div>
@@ -121,12 +102,8 @@ export default function TagsPage() {
         <div className="flex-1 overflow-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <TagsHeader onAddTag={handleAddTag} />
-            <TagsSearchAndActions
-              onSearch={setSearchTerm}
-              onAddTag={handleAddTag}
-            />
             <TagsTable 
-              tags={filteredTags} 
+              tags={productTags} 
               onDelete={handleDelete}
               onEdit={handleEditTag}
               onView={handleViewTag}
