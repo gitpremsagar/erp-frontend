@@ -40,8 +40,13 @@ export default function AddNewProductTag() {
             await createProductTag(values)
             toast.success("Product tag created successfully!")
             router.push("/admin/tags")
-        } catch (err) {
-            toast.error("Failed to create product tag. Please try again.")
+        } catch (err: any) {
+            // Check if it's a 409 conflict error
+            if (err?.response?.status === 409) {
+                toast.error("A product tag with this name already exists. Please choose a different name.")
+            } else {
+                toast.error("Unable to create product tag. Please try again.")
+            }
             console.error("Error creating product tag:", err)
         }
     }
@@ -68,7 +73,7 @@ export default function AddNewProductTag() {
                       <Input placeholder="Enter product tag name" {...field} />
                     </FormControl>
                     <FormDescription>
-                      A descriptive name for the product tag (e.g., &quot;Electronics&quot;, &quot;Clothing&quot;, &quot;Books&quot;).
+                      A descriptive name for the product tag (e.g., &quot;New Arrivals&quot;, &quot;Slow Moving&quot;, &quot;Best Sellers&quot;).
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -77,8 +82,8 @@ export default function AddNewProductTag() {
               
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
-                  <p className="font-medium">Error creating product tag</p>
-                  <p className="text-sm">{error}</p>
+                  <p className="font-medium">Unable to create product tag</p>
+                  <p className="text-sm mt-1">{error}</p>
                 </div>
               )}
 
