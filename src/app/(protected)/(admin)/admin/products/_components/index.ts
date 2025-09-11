@@ -1,3 +1,3 @@
 export { default as ProductsHeader } from './ProductsHeader';
-export { default as ProductsSearchAndActions } from './ProductsSearchAndActions';
+export { default as ProductsFilterAndActions } from './ProductsFilterAndActions';
 export { default as ProductsTable } from './ProductsTable';
