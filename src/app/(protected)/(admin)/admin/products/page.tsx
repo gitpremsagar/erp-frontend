@@ -8,27 +8,15 @@ import {
   ProductsTable 
 } from "./_components";
 import { useAdminProducts } from "@/hooks/products";
+import { useCategories } from "@/hooks/categories";
+import { useSubCategories } from "@/hooks/subCategories";
 
 export default function ProductsPage() {
   const { products, loading, error, pagination, refreshProducts, deleteProduct } = useAdminProducts();
+  const { categories } = useCategories();
+  const { subCategories } = useSubCategories();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState('all');
-
-
-  // Extract unique categories and subcategories
-  const categories = useMemo(() => {
-    const uniqueCategories = Array.from(
-      new Map(products.map(p => [p.Category.id, p.Category])).values()
-    );
-    return uniqueCategories;
-  }, [products]);
-
-  const subCategories = useMemo(() => {
-    const uniqueSubCategories = Array.from(
-      new Map(products.map(p => [p.SubCategory.id, p.SubCategory])).values()
-    );
-    return uniqueSubCategories;
-  }, [products]);
 
   // Filter products based on filters
   const filteredProducts = useMemo(() => {
