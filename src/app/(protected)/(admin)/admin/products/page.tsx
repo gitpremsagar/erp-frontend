@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react';
 import AdminSidebar from "../_components/AdminSidebar";
 import { 
   ProductsHeader, 
-  ProductsStats, 
   ProductsSearchAndActions, 
   ProductsTable 
 } from "./_components";
@@ -16,29 +15,6 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState('all');
 
-  // Calculate stats from products
-  const stats = useMemo(() => {
-    const totalProducts = products.length;
-    const lowStockProducts = products.filter(product => {
-      const stockQuantity = product.Stock[0]?.stockQuantity || 0;
-      return stockQuantity > 0 && stockQuantity <= product.lowStockLimit;
-    }).length;
-    const outOfStockProducts = products.filter(product => {
-      const stockQuantity = product.Stock[0]?.stockQuantity || 0;
-      return stockQuantity === 0;
-    }).length;
-    const totalValue = products.reduce((sum, product) => {
-      const stockQuantity = product.Stock[0]?.stockQuantity || 0;
-      return sum + (product.mrp * stockQuantity);
-    }, 0);
-
-    return {
-      totalProducts,
-      lowStockProducts,
-      outOfStockProducts,
-      totalValue
-    };
-  }, [products]);
 
   // Extract unique categories and subcategories
   const categories = useMemo(() => {
@@ -93,7 +69,6 @@ export default function ProductsPage() {
           <div className="flex-1 overflow-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <ProductsHeader />
-              <ProductsStats />
               <ProductsSearchAndActions
                 onSearch={setSearchTerm}
                 onCategoryFilter={setSelectedCategory}
@@ -122,7 +97,6 @@ export default function ProductsPage() {
           <div className="flex-1 overflow-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <ProductsHeader />
-              <ProductsStats />
               <ProductsSearchAndActions
                 onSearch={setSearchTerm}
                 onCategoryFilter={setSelectedCategory}
@@ -156,12 +130,6 @@ export default function ProductsPage() {
         <div className="flex-1 overflow-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <ProductsHeader />
-            <ProductsStats 
-              totalProducts={stats.totalProducts}
-              lowStockProducts={stats.lowStockProducts}
-              outOfStockProducts={stats.outOfStockProducts}
-              totalValue={stats.totalValue}
-            />
             <ProductsSearchAndActions
               onSearch={setSearchTerm}
               onCategoryFilter={setSelectedCategory}
