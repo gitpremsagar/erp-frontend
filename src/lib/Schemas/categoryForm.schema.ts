@@ -9,9 +9,9 @@ export const CreateCategorySchema = z.object({
     .trim(),
   description: z
     .string()
-    .min(1, "Description is required")
     .max(500, "Description must be at most 500 characters long")
-    .trim(),
+    .trim()
+    .optional(),
 });
 
 export const UpdateCategorySchema = CreateCategorySchema.partial();
