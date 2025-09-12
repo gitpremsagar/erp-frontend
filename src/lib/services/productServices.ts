@@ -1,6 +1,6 @@
 import { customAxios } from '../api/custom-axios-request';
 import { API } from '../constants';
-import { Product, ProductsResponse, GetProductsParams } from '@/lib/types/products/Product.type';
+import { Product, ProductsResponse, GetProductsParams, ProductDetailResponse } from '@/lib/types/products/Product.type';
 
 export const productServices = {
   async getProducts(params: GetProductsParams = {}): Promise<ProductsResponse> {
@@ -25,7 +25,7 @@ export const productServices = {
     }
   },
 
-  async getProductById(id: string): Promise<Product> {
+  async getProductById(id: string): Promise<ProductDetailResponse> {
     try {
       const url = API.PRODUCTS.GET_PRODUCT_BY_ID.replace(':id', id);
       const response = await customAxios.get(url);

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { productServices } from '@/lib/services/productServices';
-import { Product } from '@/lib/types/products/Product.type';
+import { ProductDetail } from '@/lib/types/products/Product.type';
 
 export const useGetProductById = (id: string) => {
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<ProductDetail | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -16,7 +16,7 @@ export const useGetProductById = (id: string) => {
         setError(null);
         
         const response = await productServices.getProductById(id);
-        setProduct(response);
+        setProduct(response.product);
       } catch (err: unknown) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to fetch product';
         setError(errorMessage);
