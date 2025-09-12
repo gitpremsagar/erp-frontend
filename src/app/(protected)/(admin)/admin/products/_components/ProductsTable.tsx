@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   useReactTable,
   getCoreRowModel,
@@ -34,6 +35,7 @@ interface ProductsTableProps {
 }
 
 export default function ProductsTable({ products, onDelete }: ProductsTableProps) {
+  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -164,7 +166,13 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
                       <Eye className="mr-3 h-4 w-4" />
                       View Details
                     </button>
-                    <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    <button 
+                      onClick={() => {
+                        setSelectedProduct(null);
+                        router.push(`/admin/products/${product.id}/edit`);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
                       <Edit className="mr-3 h-4 w-4" />
                       Edit Product
                     </button>

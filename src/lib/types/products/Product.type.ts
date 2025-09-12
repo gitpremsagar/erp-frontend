@@ -40,17 +40,18 @@ export interface Product {
   overStockLimit: number;
   categoryId: string;
   subCategoryId: string;
-  creatorId: string;
+  creatorId?: string;
   createdAt: string;
   updatedAt: string;
-  description: string;
+  description?: string | null;
   grammage: number;
   imageUrl: string;
   Category: Category;
   SubCategory: SubCategory;
-  User: User;
+  User?: User;
   ProductTagRelation: ProductTagRelation[];
   Stock: Stock[];
+  StockRecord?: any[]; // Add this field to match server response
 }
 
 export interface ProductsResponse {
