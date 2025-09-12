@@ -54,6 +54,12 @@ export default function ProductsFilterAndActions({
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
       <div className="flex flex-col gap-6">
+        {/* Filter Section Header */}
+        <div className="flex items-center gap-2 pb-2 border-b border-gray-200">
+          <Filter className="h-5 w-5 text-gray-600" />
+          <h3 className="text-lg font-semibold text-gray-900">Filter Products</h3>
+        </div>
+        
         {/* Category and Sub-Category Filters */}
         <div className="flex gap-3">
           <Select value={selectedCategory} onValueChange={handleCategoryChange}>
