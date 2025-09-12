@@ -2,8 +2,15 @@
 
 import { Package, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export default function ProductsHeader() {
+  const router = useRouter();
+
+  const handleAddProduct = () => {
+    router.push('/admin/products/add-new-product');
+  };
+
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between">
@@ -16,7 +23,10 @@ export default function ProductsHeader() {
             <p className="text-gray-600">Manage your product inventory and catalog</p>
           </div>
         </div>
-        <Button className="flex items-center space-x-2">
+        <Button 
+          className="flex items-center space-x-2"
+          onClick={handleAddProduct}
+        >
           <Plus className="h-4 w-4" />
           <span>Add Product</span>
         </Button>

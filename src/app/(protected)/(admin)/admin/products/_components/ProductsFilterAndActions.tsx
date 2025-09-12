@@ -8,18 +8,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 interface ProductsFilterAndActionsProps {
   onCategoryFilter: (category: string) => void;
   onSubCategoryFilter: (subCategory: string) => void;
+  onTagFilter: (tag: string) => void;
   categories?: Array<{ id: string; name: string }>;
   subCategories?: Array<{ id: string; name: string }>;
+  productTags?: Array<{ id: string; name: string }>;
 }
 
 export default function ProductsFilterAndActions({
   onCategoryFilter,
   onSubCategoryFilter,
+  onTagFilter,
   categories = [],
-  subCategories = []
+  subCategories = [],
+  productTags = []
 }: ProductsFilterAndActionsProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState('all');
+  const [selectedTag, setSelectedTag] = useState('all');
 
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
@@ -30,6 +35,11 @@ export default function ProductsFilterAndActions({
   const handleSubCategoryChange = (value: string) => {
     setSelectedSubCategory(value);
     onSubCategoryFilter(value);
+  };
+
+  const handleTagChange = (value: string) => {
+    setSelectedTag(value);
+    onTagFilter(value);
   };
 
   return (
@@ -60,6 +70,20 @@ export default function ProductsFilterAndActions({
               {subCategories.map((subCategory) => (
                 <SelectItem key={subCategory.id} value={subCategory.id}>
                   {subCategory.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={selectedTag} onValueChange={handleTagChange}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="All Tags" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Tags</SelectItem>
+              {productTags.map((tag) => (
+                <SelectItem key={tag.id} value={tag.id}>
+                  {tag.name}
                 </SelectItem>
               ))}
             </SelectContent>

@@ -51,6 +51,30 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
   const columns: ColumnDef<Product>[] = useMemo(
     () => [
       {
+        accessorKey: 'mrp',
+        header: ({ column }) => {
+          return (
+            <Button
+              variant="ghost"
+              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
+            >
+              MRP
+              {column.getIsSorted() === 'asc' ? (
+                <ChevronUp className="ml-2 h-4 w-4" />
+              ) : column.getIsSorted() === 'desc' ? (
+                <ChevronDown className="ml-2 h-4 w-4" />
+              ) : (
+                <ChevronsUpDown className="ml-2 h-4 w-4" />
+              )}
+            </Button>
+          );
+        },
+        cell: ({ row }) => {
+          return <div className="text-sm font-medium text-gray-900">{formatPrice(row.getValue('mrp'))}</div>;
+        },
+      },
+      {
         accessorKey: 'name',
         header: ({ column }) => {
           return (
@@ -79,30 +103,6 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
               <div className="text-xs text-gray-400">{product.grammage}g</div>
             </div>
           );
-        },
-      },
-      {
-        accessorKey: 'mrp',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
-            >
-              Price
-              {column.getIsSorted() === 'asc' ? (
-                <ChevronUp className="ml-2 h-4 w-4" />
-              ) : column.getIsSorted() === 'desc' ? (
-                <ChevronDown className="ml-2 h-4 w-4" />
-              ) : (
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              )}
-            </Button>
-          );
-        },
-        cell: ({ row }) => {
-          return <div className="text-sm font-medium text-gray-900">{formatPrice(row.getValue('mrp'))}</div>;
         },
       },
       {

@@ -10,13 +10,16 @@ import {
 import { useAdminProducts } from "@/hooks/products";
 import { useCategories } from "@/hooks/categories";
 import { useSubCategories } from "@/hooks/subCategories";
+import { useProductTags } from "@/hooks/productTags";
 
 export default function ProductsPage() {
   const { products, loading, error, pagination, refreshProducts, deleteProduct } = useAdminProducts();
   const { categories } = useCategories();
   const { subCategories } = useSubCategories();
+  const { productTags } = useProductTags();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState('all');
+  const [selectedTag, setSelectedTag] = useState('all');
 
   // Filter products based on filters
   const filteredProducts = useMemo(() => {
@@ -27,9 +30,12 @@ export default function ProductsPage() {
       const matchesSubCategory = selectedSubCategory === 'all' || 
         product.SubCategory.id === selectedSubCategory;
 
-      return matchesCategory && matchesSubCategory;
+      const matchesTag = selectedTag === 'all' || 
+        product.ProductTagRelation.some(tagRelation => tagRelation.ProductTag.id === selectedTag);
+
+      return matchesCategory && matchesSubCategory && matchesTag;
     });
-  }, [products, selectedCategory, selectedSubCategory]);
+  }, [products, selectedCategory, selectedSubCategory, selectedTag]);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
@@ -54,8 +60,10 @@ export default function ProductsPage() {
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
                 onSubCategoryFilter={setSelectedSubCategory}
+                onTagFilter={setSelectedTag}
                 categories={categories}
                 subCategories={subCategories}
+                productTags={productTags}
               />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
                 <div className="text-center">
@@ -81,8 +89,10 @@ export default function ProductsPage() {
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
                 onSubCategoryFilter={setSelectedSubCategory}
+                onTagFilter={setSelectedTag}
                 categories={categories}
                 subCategories={subCategories}
+                productTags={productTags}
               />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
                 <div className="text-center">
@@ -113,8 +123,10 @@ export default function ProductsPage() {
             <ProductsFilterAndActions
               onCategoryFilter={setSelectedCategory}
               onSubCategoryFilter={setSelectedSubCategory}
+              onTagFilter={setSelectedTag}
               categories={categories}
               subCategories={subCategories}
+              productTags={productTags}
             />
             <ProductsTable 
               products={filteredProducts} 
