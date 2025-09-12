@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from "../_components/AdminSidebar";
@@ -24,13 +24,18 @@ export default function CategoriesPage() {
       try {
         await categoryServices.deleteCategory(id);
         dispatch(removeCategory(id));
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Error deleting category:', error);
         
         // Check if it's a 400 error with the specific message
-        if (error?.response?.status === 400 && 
-            error?.response?.data?.message === "Cannot delete category as it is associated with existing products") {
-          alert('Cannot delete category as it is associated with existing products!');
+        if (error && typeof error === 'object' && 'response' in error) {
+          const axiosError = error as { response?: { status?: number; data?: { message?: string } } };
+          if (axiosError.response?.status === 400 && 
+              axiosError.response?.data?.message === "Cannot delete category as it is associated with existing products") {
+            alert('Cannot delete category as it is associated with existing products!');
+          } else {
+            alert('Failed to delete category. Please try again.');
+          }
         } else {
           alert('Failed to delete category. Please try again.');
         }

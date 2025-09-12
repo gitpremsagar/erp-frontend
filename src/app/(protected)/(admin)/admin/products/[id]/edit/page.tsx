@@ -167,7 +167,7 @@ export default function EditProduct() {
           <CardContent className="py-12">
             <div className="text-center">
               <h3 className="text-lg font-semibold mb-2">Product Not Found</h3>
-              <p className="text-muted-foreground mb-4">The product you're looking for doesn't exist.</p>
+              <p className="text-muted-foreground mb-4">The product you&apos;re looking for doesn&apos;t exist.</p>
               <Button onClick={() => router.push("/admin/products")}>
                 Back to Products
               </Button>

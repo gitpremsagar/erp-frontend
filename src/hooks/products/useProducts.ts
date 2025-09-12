@@ -102,7 +102,7 @@ export function useProducts() {
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           (product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
                            product.productCode.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || 
                              product.Category.id === selectedCategory;

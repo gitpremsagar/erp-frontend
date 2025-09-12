@@ -31,6 +31,17 @@ export interface Stock {
   stockQuantity: number;
 }
 
+export interface StockRecord {
+  id: string;
+  productId: string;
+  previousQuantity: number;
+  newQuantity: number;
+  changeType: 'increase' | 'decrease' | 'adjustment';
+  reason?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -51,7 +62,7 @@ export interface Product {
   User?: User;
   ProductTagRelation: ProductTagRelation[];
   Stock: Stock[];
-  StockRecord?: any[]; // Add this field to match server response
+  StockRecord?: StockRecord[];
 }
 
 export interface ProductsResponse {
