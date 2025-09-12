@@ -113,6 +113,15 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
           const tags = product.ProductTagRelation.slice(0, 2).map(relation => relation.ProductTag.name);
           const remainingTags = product.ProductTagRelation.length - 2;
           
+          // Show dash if no tags are associated with the product
+          if (product.ProductTagRelation.length === 0) {
+            return (
+              <div className="text-sm text-gray-400">
+                —
+              </div>
+            );
+          }
+          
           return (
             <div className="flex flex-wrap gap-1">
               {tags.map((tag, index) => (
