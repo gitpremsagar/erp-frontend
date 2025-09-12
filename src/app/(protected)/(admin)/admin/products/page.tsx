@@ -19,7 +19,7 @@ export default function ProductsPage() {
   const { productTags } = useProductTags();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState('all');
-  const [selectedTag, setSelectedTag] = useState('all');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Filter products based on filters
   const filteredProducts = useMemo(() => {
@@ -30,12 +30,14 @@ export default function ProductsPage() {
       const matchesSubCategory = selectedSubCategory === 'all' || 
         product.SubCategory.id === selectedSubCategory;
 
-      const matchesTag = selectedTag === 'all' || 
-        product.ProductTagRelation.some(tagRelation => tagRelation.ProductTag.id === selectedTag);
+      const matchesTags = selectedTags.length === 0 || 
+        selectedTags.every(selectedTagId => 
+          product.ProductTagRelation.some(tagRelation => tagRelation.ProductTag.id === selectedTagId)
+        );
 
-      return matchesCategory && matchesSubCategory && matchesTag;
+      return matchesCategory && matchesSubCategory && matchesTags;
     });
-  }, [products, selectedCategory, selectedSubCategory, selectedTag]);
+  }, [products, selectedCategory, selectedSubCategory, selectedTags]);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
@@ -60,7 +62,7 @@ export default function ProductsPage() {
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
                 onSubCategoryFilter={setSelectedSubCategory}
-                onTagFilter={setSelectedTag}
+                onTagFilter={setSelectedTags}
                 categories={categories}
                 subCategories={subCategories}
                 productTags={productTags}
@@ -89,7 +91,7 @@ export default function ProductsPage() {
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
                 onSubCategoryFilter={setSelectedSubCategory}
-                onTagFilter={setSelectedTag}
+                onTagFilter={setSelectedTags}
                 categories={categories}
                 subCategories={subCategories}
                 productTags={productTags}
@@ -123,7 +125,7 @@ export default function ProductsPage() {
             <ProductsFilterAndActions
               onCategoryFilter={setSelectedCategory}
               onSubCategoryFilter={setSelectedSubCategory}
-              onTagFilter={setSelectedTag}
+                onTagFilter={setSelectedTags}
               categories={categories}
               subCategories={subCategories}
               productTags={productTags}
