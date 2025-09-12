@@ -1,5 +1,5 @@
-// export const BASE_API_URL = "http://localhost:3008";
-export const BASE_API_URL = "https://erp-backend-blond.vercel.app";
+export const BASE_API_URL = "http://localhost:3008";
+// export const BASE_API_URL = "https://erp-backend-blond.vercel.app";
 
 export const API_URL = `${BASE_API_URL}/api`;
 
