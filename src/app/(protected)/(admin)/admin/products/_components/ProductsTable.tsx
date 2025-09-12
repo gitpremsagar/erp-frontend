@@ -22,10 +22,7 @@ import {
   Search, 
   ChevronDown, 
   ChevronUp, 
-  ChevronsUpDown,
-  AlertTriangle,
-  CheckCircle,
-  XCircle
+  ChevronsUpDown
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,24 +39,6 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
   const [globalFilter, setGlobalFilter] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
-  const getStockStatus = (product: Product) => {
-    const stockQuantity = product.Stock[0]?.stockQuantity || 0;
-    if (stockQuantity === 0) {
-      return { status: 'out', color: 'text-red-600', bg: 'bg-red-100', icon: XCircle };
-    } else if (stockQuantity <= product.lowStockLimit) {
-      return { status: 'low', color: 'text-yellow-600', bg: 'bg-yellow-100', icon: AlertTriangle };
-    } else {
-      return { status: 'good', color: 'text-green-600', bg: 'bg-green-100', icon: CheckCircle };
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-IN', {
@@ -103,19 +82,6 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
         },
       },
       {
-        accessorKey: 'Category',
-        header: 'Category',
-        cell: ({ row }) => {
-          const product = row.original;
-          return (
-            <div>
-              <div className="text-sm text-gray-900">{product.Category.name}</div>
-              <div className="text-sm text-gray-500">{product.SubCategory.name}</div>
-            </div>
-          );
-        },
-      },
-      {
         accessorKey: 'mrp',
         header: ({ column }) => {
           return (
@@ -137,29 +103,6 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
         },
         cell: ({ row }) => {
           return <div className="text-sm font-medium text-gray-900">{formatPrice(row.getValue('mrp'))}</div>;
-        },
-      },
-      {
-        accessorKey: 'Stock',
-        header: 'Stock',
-        cell: ({ row }) => {
-          const product = row.original;
-          const stockQuantity = product.Stock[0]?.stockQuantity || 0;
-          const stockStatus = getStockStatus(product);
-          
-          return (
-            <div className="flex items-center">
-              <div className={`p-1 rounded-full ${stockStatus.bg}`}>
-                <stockStatus.icon className={`h-4 w-4 ${stockStatus.color}`} />
-              </div>
-              <div className="ml-2">
-                <div className="text-sm font-medium text-gray-900">{stockQuantity}</div>
-                <div className="text-xs text-gray-500">
-                  Low: {product.lowStockLimit} | High: {product.overStockLimit}
-                </div>
-              </div>
-            </div>
-          );
         },
       },
       {
@@ -187,30 +130,6 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
               )}
             </div>
           );
-        },
-      },
-      {
-        accessorKey: 'createdAt',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
-            >
-              Created
-              {column.getIsSorted() === 'asc' ? (
-                <ChevronUp className="ml-2 h-4 w-4" />
-              ) : column.getIsSorted() === 'desc' ? (
-                <ChevronDown className="ml-2 h-4 w-4" />
-              ) : (
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              )}
-            </Button>
-          );
-        },
-        cell: ({ row }) => {
-          return <div className="text-sm text-gray-500">{formatDate(row.getValue('createdAt'))}</div>;
         },
       },
       {
