@@ -62,33 +62,39 @@ export default function ProductsFilterAndActions({
         
         {/* Category and Sub-Category Filters */}
         <div className="flex gap-3">
-          <Select value={selectedCategory} onValueChange={handleCategoryChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
-              {categories.map((category) => (
-                <SelectItem key={category.id} value={category.id}>
-                  {category.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">Category</label>
+            <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-          <Select value={selectedSubCategory} onValueChange={handleSubCategoryChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Sub-Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Sub-Categories</SelectItem>
-              {subCategories.map((subCategory) => (
-                <SelectItem key={subCategory.id} value={subCategory.id}>
-                  {subCategory.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">Sub-Category</label>
+            <Select value={selectedSubCategory} onValueChange={handleSubCategoryChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="All Sub-Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Sub-Categories</SelectItem>
+                {subCategories.map((subCategory) => (
+                  <SelectItem key={subCategory.id} value={subCategory.id}>
+                    {subCategory.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         {/* Tag Filters */}
