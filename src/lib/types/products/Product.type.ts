@@ -1,3 +1,11 @@
+// Import types from other modules
+import { Order } from '../orders/Order.type';
+import { 
+  DetailedStock, 
+  DetailedStockRecord, 
+  StockRecordEntryReason 
+} from '../stock/Stock.type';
+
 export interface ProductTag {
   id: string;
   name: string;
@@ -25,22 +33,6 @@ export interface User {
   name: string;
 }
 
-export interface Stock {
-  id: string;
-  stockId: string;
-  stockQuantity: number;
-}
-
-export interface StockRecord {
-  id: string;
-  productId: string;
-  previousQuantity: number;
-  newQuantity: number;
-  changeType: 'increase' | 'decrease' | 'adjustment';
-  reason?: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export interface Product {
   id: string;
@@ -61,8 +53,8 @@ export interface Product {
   SubCategory: SubCategory;
   User?: User;
   ProductTagRelation: ProductTagRelation[];
-  Stock: Stock[];
-  StockRecord?: StockRecord[];
+  Stock: DetailedStock[];
+  StockRecord?: DetailedStockRecord[];
 }
 
 // Enhanced types for detailed product response (GET_PRODUCT_BY_ID)
@@ -114,8 +106,8 @@ export interface ProductDetail {
   Category: DetailedCategory;
   SubCategory: DetailedSubCategory;
   ProductTagRelation: DetailedProductTagRelation[];
-  Stock: any[]; // Empty array in the sample response
-  StockRecord: any[]; // Empty array in the sample response
+  Stock: DetailedStock[];
+  StockRecord: DetailedStockRecord[];
 }
 
 export interface ProductDetailResponse {
