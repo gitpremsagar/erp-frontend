@@ -41,7 +41,14 @@ export default function ProductsPage() {
         // The hook will automatically refresh the data
       } catch (error) {
         console.error('Error deleting product:', error);
-        alert('Failed to delete product. Please try again.');
+        
+        // Check if the error response contains the specific message about existing orders
+        const errorMessage = (error as any)?.response?.data?.message;
+        if (errorMessage === "Cannot delete product as it is associated with existing orders") {
+          alert('Cannot delete this product because it is associated with existing orders. Please remove the product from all orders before deleting.');
+        } else {
+          alert('Failed to delete product. Please try again.');
+        }
       }
     }
   };
