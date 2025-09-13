@@ -20,6 +20,7 @@ export const categoryServices = {
       if (params.sortOrder) queryParams.append('sortOrder', params.sortOrder);
 
       const url = `${API.CATEGORIES.GET_ALL_CATEGORIES}?${queryParams.toString()}`;
+      // console.log('category url\n', url);
       const response = await customAxios.get(url);
       
       return response.data;

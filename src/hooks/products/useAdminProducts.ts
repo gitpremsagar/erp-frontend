@@ -8,7 +8,7 @@ export function useAdminProducts() {
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 10,
+    limit: 1000,
     total: 0,
     totalPages: 0,
     hasNext: false,
@@ -23,7 +23,7 @@ export function useAdminProducts() {
       
       const response = await productServices.getProducts({
         page: params.page || 1,
-        limit: params.limit || 10,
+        limit: params.limit || 1000,
         category: params.category === 'all' ? undefined : params.category,
         search: params.search || undefined,
         sortBy: params.sortBy || undefined,
@@ -49,7 +49,7 @@ export function useAdminProducts() {
   const refreshProducts = (params: GetProductsParams = {}) => {
     fetchProducts({
       page: 1,
-      limit: 10,
+      limit: 1000,
       ...params
     });
   };
