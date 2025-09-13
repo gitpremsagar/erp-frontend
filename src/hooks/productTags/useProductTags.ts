@@ -1,21 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
 import { fetchProductTags } from '@/redux/slices/productTagsSlice';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const useProductTags = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { productTags, isLoading, error } = useSelector((state: RootState) => state.productTags);
+  const hasLoadedRef = useRef(false);
 
   const loadProductTags = () => {
     dispatch(fetchProductTags());
   };
 
   useEffect(() => {
-    if (productTags.length === 0 && !isLoading && !error) {
+    console.log('loading product tags called in useProductTags hook');
+    if (!hasLoadedRef.current && !isLoading && !error) {
+      hasLoadedRef.current = true;
       loadProductTags();
     }
-  }, [productTags.length, isLoading, error]);
+  }, [isLoading, error]);
 
   return {
     productTags,

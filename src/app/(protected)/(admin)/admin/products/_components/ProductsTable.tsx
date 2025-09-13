@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   useReactTable,
   getCoreRowModel,
@@ -34,6 +35,7 @@ interface ProductsTableProps {
 }
 
 export default function ProductsTable({ products, onDelete }: ProductsTableProps) {
+  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -50,6 +52,30 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
 
   const columns: ColumnDef<Product>[] = useMemo(
     () => [
+      {
+        accessorKey: 'mrp',
+        header: ({ column }) => {
+          return (
+            <Button
+              variant="ghost"
+              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
+            >
+              MRP
+              {column.getIsSorted() === 'asc' ? (
+                <ChevronUp className="ml-2 h-4 w-4" />
+              ) : column.getIsSorted() === 'desc' ? (
+                <ChevronDown className="ml-2 h-4 w-4" />
+              ) : (
+                <ChevronsUpDown className="ml-2 h-4 w-4" />
+              )}
+            </Button>
+          );
+        },
+        cell: ({ row }) => {
+          return <div className="text-sm font-medium text-gray-900">{formatPrice(row.getValue('mrp'))}</div>;
+        },
+      },
       {
         accessorKey: 'name',
         header: ({ column }) => {
@@ -82,36 +108,21 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
         },
       },
       {
-        accessorKey: 'mrp',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-              className="h-auto p-0 font-medium text-gray-500 uppercase tracking-wider text-xs"
-            >
-              Price
-              {column.getIsSorted() === 'asc' ? (
-                <ChevronUp className="ml-2 h-4 w-4" />
-              ) : column.getIsSorted() === 'desc' ? (
-                <ChevronDown className="ml-2 h-4 w-4" />
-              ) : (
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              )}
-            </Button>
-          );
-        },
-        cell: ({ row }) => {
-          return <div className="text-sm font-medium text-gray-900">{formatPrice(row.getValue('mrp'))}</div>;
-        },
-      },
-      {
         accessorKey: 'ProductTagRelation',
         header: 'Tags',
         cell: ({ row }) => {
           const product = row.original;
           const tags = product.ProductTagRelation.slice(0, 2).map(relation => relation.ProductTag.name);
           const remainingTags = product.ProductTagRelation.length - 2;
+          
+          // Show dash if no tags are associated with the product
+          if (product.ProductTagRelation.length === 0) {
+            return (
+              <div className="text-sm text-gray-400">
+                —
+              </div>
+            );
+          }
           
           return (
             <div className="flex flex-wrap gap-1">
@@ -155,7 +166,13 @@ export default function ProductsTable({ products, onDelete }: ProductsTableProps
                       <Eye className="mr-3 h-4 w-4" />
                       View Details
                     </button>
-                    <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    <button 
+                      onClick={() => {
+                        setSelectedProduct(null);
+                        router.push(`/admin/products/${product.id}/edit`);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
                       <Edit className="mr-3 h-4 w-4" />
                       Edit Product
                     </button>
