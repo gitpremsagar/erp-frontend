@@ -91,6 +91,30 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         },
       },
       {
+        accessorKey: 'ProductTagRelation',
+        header: 'Tags',
+        cell: ({ row }) => {
+          const tags = row.original.ProductTagRelation || [];
+          if (tags.length === 0) {
+            return (
+              <span className="text-sm text-gray-400 italic">No tags</span>
+            );
+          }
+          return (
+            <div className="flex flex-wrap gap-1">
+              {tags.map((tagRelation) => (
+                <span
+                  key={tagRelation.id}
+                  className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                >
+                  {tagRelation.ProductTag.name}
+                </span>
+              ))}
+            </div>
+          );
+        },
+      },
+      {
         accessorKey: 'stockAlert',
         header: 'Stock Alert',
         cell: ({ row }) => (
