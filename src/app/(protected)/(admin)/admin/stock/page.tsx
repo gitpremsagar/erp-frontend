@@ -1,14 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 import AdminSidebar from "../_components/AdminSidebar";
-import StocksHeader from "@/app/(protected)/(admin)/admin/stock/_components/StocksHeader";
-import StocksTable from "@/app/(protected)/(admin)/admin/stock/_components/StocksTable";
-import StockLoading from "@/app/(protected)/(admin)/admin/stock/_components/StockLoading";
-import StockError from "@/app/(protected)/(admin)/admin/stock/_components/StockError";
+import { 
+  StocksHeader, 
+  StocksTable, 
+  StockLoading, 
+  StockError, 
+  StocksFilterAndActions 
+} from "@/app/(protected)/(admin)/admin/stock/_components";
 import { Product } from "@/lib/types/products/Product.type";
 import { productServices } from "@/lib/services/productServices";
+import { useCategories } from "@/hooks/categories";
+import { useProductTags } from "@/hooks/productTags";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +27,15 @@ export default function StockPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
   const [newStock, setNewStock] = useState<number>(0);
+  
+  // Filter states
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedStockLevel, setSelectedStockLevel] = useState('all');
+  
+  // Hooks for categories and tags
+  const { categories } = useCategories();
+  const { productTags } = useProductTags();
 
   // Fetch products from API
   useEffect(() => {
@@ -43,6 +57,41 @@ export default function StockPage() {
 
     fetchProducts();
   }, []);
+
+  // Filter products based on filters
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      const matchesCategory = selectedCategory === 'all' || 
+        product.Category.id === selectedCategory;
+      
+      const matchesTags = selectedTags.length === 0 || 
+        selectedTags.every(selectedTagId => 
+          product.ProductTagRelation.some(tagRelation => tagRelation.ProductTag.id === selectedTagId)
+        );
+
+      const currentStock = product.Stock[0]?.stockQuantity || 0;
+      let matchesStockLevel = true;
+      
+      switch (selectedStockLevel) {
+        case 'low':
+          matchesStockLevel = currentStock <= 10 && currentStock > 0;
+          break;
+        case 'medium':
+          matchesStockLevel = currentStock > 10 && currentStock <= 50;
+          break;
+        case 'high':
+          matchesStockLevel = currentStock > 50;
+          break;
+        case 'out':
+          matchesStockLevel = currentStock === 0;
+          break;
+        default:
+          matchesStockLevel = true;
+      }
+
+      return matchesCategory && matchesTags && matchesStockLevel;
+    });
+  }, [products, selectedCategory, selectedTags, selectedStockLevel]);
 
   const handleUpdateStock = (product: Product) => {
     setSelectedProduct(product);
@@ -87,22 +136,66 @@ export default function StockPage() {
   };
 
   if (loading) {
-    return <StockLoading />;
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="flex h-[calc(100vh-64px)]">
+          <AdminSidebar />
+          <div className="flex-1 overflow-auto">
+            <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              <StocksHeader />
+              <StocksFilterAndActions
+                onCategoryFilter={setSelectedCategory}
+                onTagFilter={setSelectedTags}
+                onStockLevelFilter={setSelectedStockLevel}
+                categories={categories}
+                productTags={productTags}
+              />
+              <StockLoading />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <StockError error={error} />;
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="flex h-[calc(100vh-64px)]">
+          <AdminSidebar />
+          <div className="flex-1 overflow-auto">
+            <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              <StocksHeader />
+              <StocksFilterAndActions
+                onCategoryFilter={setSelectedCategory}
+                onTagFilter={setSelectedTags}
+                onStockLevelFilter={setSelectedStockLevel}
+                categories={categories}
+                productTags={productTags}
+              />
+              <StockError error={error} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      
       <div className="flex h-[calc(100vh-64px)]">
         <AdminSidebar />
         <div className="flex-1 overflow-auto">
           <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <StocksHeader />
-            <StocksTable data={products} onUpdateStock={handleUpdateStock} />
+            <StocksFilterAndActions
+              onCategoryFilter={setSelectedCategory}
+              onTagFilter={setSelectedTags}
+              onStockLevelFilter={setSelectedStockLevel}
+              categories={categories}
+              productTags={productTags}
+            />
+            <StocksTable data={filteredProducts} onUpdateStock={handleUpdateStock} />
           </div>
         </div>
       </div>
