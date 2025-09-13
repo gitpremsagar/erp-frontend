@@ -40,10 +40,10 @@ export const stats = [
 
 export const quickActions = [
     {
-        title: "Add New Product",
-        description: "Add a new product to inventory",
+        title: "Add Product",
+        description: "Add a new product",
         icon: Package,
-        href: "/admin/inventory"
+        href: "/admin/products/add-new-product"
     },
     {
         title: "View Orders",
