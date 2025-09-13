@@ -26,14 +26,14 @@ export default function VehiclesStats({ vehicles }: VehiclesStatsProps) {
     },
     {
       name: 'Total Capacity',
-      value: `${totalCapacity.toLocaleString()} kg`,
+      value: `${totalCapacity.toLocaleString()} boxes`,
       icon: Package,
       color: 'text-green-600',
       bgColor: 'bg-green-100',
     },
     {
       name: 'Average Capacity',
-      value: `${averageCapacity.toLocaleString()} kg`,
+      value: `${averageCapacity.toLocaleString()} boxes`,
       icon: TrendingUp,
       color: 'text-purple-600',
       bgColor: 'bg-purple-100',

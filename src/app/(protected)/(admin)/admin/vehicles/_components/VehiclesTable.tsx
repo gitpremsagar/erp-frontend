@@ -61,7 +61,7 @@ export default function VehiclesTable({ vehicles }: VehiclesTableProps) {
   };
 
   const formatCapacity = (capacity: number) => {
-    return `${capacity.toLocaleString()} kg`;
+    return `${capacity.toLocaleString()} boxes`;
   };
 
   const columns: ColumnDef<Vehicle>[] = useMemo(
