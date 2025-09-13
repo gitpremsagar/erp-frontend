@@ -7,30 +7,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 interface ProductsFilterAndActionsProps {
   onCategoryFilter: (category: string) => void;
-  onSubCategoryFilter: (subCategory: string) => void;
   categories?: Array<{ id: string; name: string }>;
-  subCategories?: Array<{ id: string; name: string }>;
 }
 
 export default function ProductsFilterAndActions({
   onCategoryFilter,
-  onSubCategoryFilter,
   categories = [],
-  subCategories = []
 }: ProductsFilterAndActionsProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedSubCategory, setSelectedSubCategory] = useState('all');
 
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
-    setSelectedSubCategory('all'); // Reset subcategory when category changes
     onCategoryFilter(value);
   };
 
-  const handleSubCategoryChange = (value: string) => {
-    setSelectedSubCategory(value);
-    onSubCategoryFilter(value);
-  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
@@ -51,19 +41,6 @@ export default function ProductsFilterAndActions({
             </SelectContent>
           </Select>
 
-          <Select value={selectedSubCategory} onValueChange={handleSubCategoryChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Sub-Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Sub-Categories</SelectItem>
-              {subCategories.map((subCategory) => (
-                <SelectItem key={subCategory.id} value={subCategory.id}>
-                  {subCategory.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
 
         {/* Actions */}

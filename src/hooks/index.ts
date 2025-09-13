@@ -18,7 +18,7 @@ export { useProductTags } from './productTags/useProductTags';
 export { useCategories } from './categories/useCategories';
 
 // Sub-Category hooks
-export { useSubCategories } from './subCategories/useSubCategories';
+// export { useSubCategories } from './subCategories/useSubCategories'; // TODO: Implement when subCategories hook is created
 
 // Vehicle hooks
 export { useCreateVehicle } from './vehicles/useCreateVehicle';

@@ -13,7 +13,8 @@ import {
 import { Product } from '@/lib/types/products/Product.type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowUpDown, Package, Edit } from 'lucide-react';
+import { ArrowUpDown, Package, Edit, Pencil } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import StockAlert from './StockAlert';
 
 interface StocksTableProps {
@@ -24,6 +25,7 @@ interface StocksTableProps {
 export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
+  const router = useRouter();
   // Use data directly since we're removing category filtering
   const filteredData = data;
 
@@ -51,7 +53,7 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
             className="flex items-center gap-1 text-left"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Product
+            PRODUCT
             <ArrowUpDown className="w-4 h-4 text-gray-400" />
           </button>
         ),
@@ -59,6 +61,13 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
           const product = row.original;
           return (
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push(`/admin/products/${product.id}/edit`)}
+                className="p-1 hover:bg-gray-100 rounded-md transition-colors"
+                title="Edit product"
+              >
+                <Pencil className="w-4 h-4 text-gray-500 hover:text-gray-700" />
+              </button>
               <div>
                 <div className="text-sm font-medium text-gray-900">{product.name}</div>
                 <div className="text-xs text-gray-500">{product.productCode}</div>
@@ -68,13 +77,14 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         },
       },
       {
-        accessorKey: 'Stock',
+        accessorFn: (row) => row.Stock[0]?.stockQuantity || 0,
+        id: 'stockQuantity',
         header: ({ column }) => (
           <button
             className="flex items-center gap-1"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Stock
+            TOTAL STOCK
             <ArrowUpDown className="w-4 h-4 text-gray-400" />
           </button>
         ),
@@ -91,15 +101,39 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         },
       },
       {
+        accessorKey: 'ProductTagRelation',
+        header: 'TAGS',
+        cell: ({ row }) => {
+          const tags = row.original.ProductTagRelation || [];
+          if (tags.length === 0) {
+            return (
+              <span className="text-sm text-gray-400 italic">No tags</span>
+            );
+          }
+          return (
+            <div className="flex flex-wrap gap-1">
+              {tags.map((tagRelation) => (
+                <span
+                  key={tagRelation.id}
+                  className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                >
+                  {tagRelation.ProductTag.name}
+                </span>
+              ))}
+            </div>
+          );
+        },
+      },
+      {
         accessorKey: 'stockAlert',
-        header: 'Stock Alert',
+        header: 'STOCK ALERT',
         cell: ({ row }) => (
           <StockAlert product={row.original} />
         ),
       },
       {
         id: 'actions',
-        header: 'Actions',
+        header: 'ACTIONS',
         cell: ({ row }) => (
           <div className="text-center">
             <Button 
@@ -115,7 +149,7 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         ),
       },
     ],
-    [onUpdateStock]
+    [onUpdateStock, router]
   );
 
   const table = useReactTable({

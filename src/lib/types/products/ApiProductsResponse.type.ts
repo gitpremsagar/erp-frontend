@@ -24,7 +24,6 @@ export interface ApiProduct {
   imageUrl: string;
   categoryId: string;
   groupId: string;
-  subCategoryId: string;
   createdAt: string;
   updatedAt: string;
   Category: {
@@ -40,14 +39,6 @@ export interface ApiProduct {
     description: string;
     createdAt: string;
     updatedAt: string;
-  };
-  SubCategory: {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    categoryId: string;
   };
 }
 
@@ -67,7 +58,6 @@ export interface GetProductsParams {
   page?: number;
   limit?: number;
   category?: string;
-  subCategory?: string;
   search?: string;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';

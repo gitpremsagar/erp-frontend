@@ -26,7 +26,6 @@ export interface OrderItemProduct {
   imageUrl: string;
   categoryId: string;
   groupId: string;
-  subCategoryId: string;
   createdAt: string;
   updatedAt: string;
   Category: {
@@ -42,14 +41,6 @@ export interface OrderItemProduct {
     description: string;
     createdAt: string;
     updatedAt: string;
-  };
-  SubCategory: {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    categoryId: string;
   };
 }
 

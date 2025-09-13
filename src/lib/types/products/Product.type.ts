@@ -23,10 +23,6 @@ export interface Category {
   name: string;
 }
 
-export interface SubCategory {
-  id: string;
-  name: string;
-}
 
 export interface User {
   id: string;
@@ -42,7 +38,6 @@ export interface Product {
   lowStockLimit: number;
   overStockLimit: number;
   categoryId: string;
-  subCategoryId: string;
   creatorId?: string;
   createdAt: string;
   updatedAt: string;
@@ -50,7 +45,6 @@ export interface Product {
   grammage: number;
   imageUrl: string;
   Category: Category;
-  SubCategory: SubCategory;
   User?: User;
   ProductTagRelation: ProductTagRelation[];
   Stock: DetailedStock[];
@@ -66,14 +60,6 @@ export interface DetailedCategory {
   updatedAt: string;
 }
 
-export interface DetailedSubCategory {
-  id: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  categoryId: string;
-}
 
 export interface DetailedProductTag {
   id: string;
@@ -97,14 +83,12 @@ export interface ProductDetail {
   lowStockLimit: number;
   overStockLimit: number;
   categoryId: string;
-  subCategoryId: string;
   createdAt: string;
   updatedAt: string;
   description: string | null;
   grammage: number;
   imageUrl: string;
   Category: DetailedCategory;
-  SubCategory: DetailedSubCategory;
   ProductTagRelation: DetailedProductTagRelation[];
   Stock: DetailedStock[];
   StockRecord: DetailedStockRecord[];
@@ -130,7 +114,6 @@ export interface GetProductsParams {
   page?: number;
   limit?: number;
   category?: string;
-  subCategory?: string;
   search?: string;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';

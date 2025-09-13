@@ -20,7 +20,6 @@ export interface Product {
   lowStockLimit: number;
   overStockLimit: number;
   categoryId: string;
-  subCategoryId: string;
   creatorId?: string;
   createdAt: string;
   updatedAt: string;

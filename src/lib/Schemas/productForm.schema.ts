@@ -25,9 +25,6 @@ export const CreateProductSchema = z.object({
   categoryId: z
     .string()
     .min(1, "Category is required"),
-  subCategoryId: z
-    .string()
-    .min(1, "Sub-category is required"),
   grammage: z
     .number()
     .int("Grammage must be an integer")
@@ -49,7 +46,6 @@ export const ProductQuerySchema = z.object({
   search: z.string().optional(),
   categoryId: z.string().optional(),
   groupId: z.string().optional(),
-  subCategoryId: z.string().optional(),
   minPrice: z.string().optional().transform(val => val ? parseInt(val) : undefined),
   maxPrice: z.string().optional().transform(val => val ? parseInt(val) : undefined),
 });

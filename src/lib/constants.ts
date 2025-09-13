@@ -19,7 +19,6 @@ export const API = {
         GET_ALL_PRODUCTS: `${API_URL}/products`,
         GET_PRODUCT_BY_ID: `${API_URL}/products/:id`,
         GET_PRODUCT_BY_CATEGORY: `${API_URL}/products/category/:category`,
-        GET_PRODUCT_BY_SUB_CATEGORY: `${API_URL}/products/sub-category/:subCategory`,
         UPDATE_PRODUCT: `${API_URL}/products/:id`,
         DELETE_PRODUCT: `${API_URL}/products/:id`,
     },
@@ -37,13 +36,6 @@ export const API = {
         UPDATE_CATEGORY: `${API_URL}/categories/:id`,
         DELETE_CATEGORY: `${API_URL}/categories/:id`,
     },
-    SUB_CATEGORIES: {
-        CREATE_SUB_CATEGORY: `${API_URL}/sub-categories`,
-        GET_ALL_SUB_CATEGORIES: `${API_URL}/sub-categories`,
-        GET_SUB_CATEGORY_BY_ID: `${API_URL}/sub-categories/:id`,
-        UPDATE_SUB_CATEGORY: `${API_URL}/sub-categories/:id`,
-        DELETE_SUB_CATEGORY: `${API_URL}/sub-categories/:id`,
-    },    
     CUSTOMERS: {
         CREATE_CUSTOMER: `${API_URL}/customers`,
         GET_ALL_CUSTOMERS: `${API_URL}/customers`,

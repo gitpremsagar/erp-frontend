@@ -9,16 +9,13 @@ import {
 } from "./_components";
 import { useAdminProducts } from "@/hooks/products";
 import { useCategories } from "@/hooks/categories";
-import { useSubCategories } from "@/hooks/subCategories";
 import { useProductTags } from "@/hooks/productTags";
 
 export default function ProductsPage() {
-  const { products, loading, error, pagination, refreshProducts, deleteProduct } = useAdminProducts();
+  const { products, loading, error, refreshProducts, deleteProduct } = useAdminProducts();
   const { categories } = useCategories();
-  const { subCategories } = useSubCategories();
   const { productTags } = useProductTags();
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedSubCategory, setSelectedSubCategory] = useState('all');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Filter products based on filters
@@ -27,17 +24,15 @@ export default function ProductsPage() {
       const matchesCategory = selectedCategory === 'all' || 
         product.Category.id === selectedCategory;
       
-      const matchesSubCategory = selectedSubCategory === 'all' || 
-        product.SubCategory.id === selectedSubCategory;
 
       const matchesTags = selectedTags.length === 0 || 
         selectedTags.every(selectedTagId => 
           product.ProductTagRelation.some(tagRelation => tagRelation.ProductTag.id === selectedTagId)
         );
 
-      return matchesCategory && matchesSubCategory && matchesTags;
+      return matchesCategory && matchesTags;
     });
-  }, [products, selectedCategory, selectedSubCategory, selectedTags]);
+  }, [products, selectedCategory, selectedTags]);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
@@ -46,7 +41,14 @@ export default function ProductsPage() {
         // The hook will automatically refresh the data
       } catch (error) {
         console.error('Error deleting product:', error);
-        alert('Failed to delete product. Please try again.');
+        
+        // Check if the error response contains the specific message about existing orders
+        const errorMessage = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        if (errorMessage === "Cannot delete product as it is associated with existing orders") {
+          alert('Cannot delete this product because it is associated with existing orders. Please remove the product from all orders before deleting.');
+        } else {
+          alert('Failed to delete product. Please try again.');
+        }
       }
     }
   };
@@ -61,10 +63,8 @@ export default function ProductsPage() {
               <ProductsHeader />
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
-                onSubCategoryFilter={setSelectedSubCategory}
                 onTagFilter={setSelectedTags}
                 categories={categories}
-                subCategories={subCategories}
                 productTags={productTags}
               />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
@@ -90,10 +90,8 @@ export default function ProductsPage() {
               <ProductsHeader />
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
-                onSubCategoryFilter={setSelectedSubCategory}
                 onTagFilter={setSelectedTags}
                 categories={categories}
-                subCategories={subCategories}
                 productTags={productTags}
               />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
@@ -124,10 +122,8 @@ export default function ProductsPage() {
             <ProductsHeader />
             <ProductsFilterAndActions
               onCategoryFilter={setSelectedCategory}
-              onSubCategoryFilter={setSelectedSubCategory}
                 onTagFilter={setSelectedTags}
               categories={categories}
-              subCategories={subCategories}
               productTags={productTags}
             />
             <ProductsTable 

@@ -24,7 +24,6 @@ export interface Product {
   imageUrl: string;
   categoryId: string;
   groupId: string;
-  subCategoryId: string;
   createdAt: string;
   updatedAt: string;
   Category: {
@@ -40,14 +39,6 @@ export interface Product {
     description: string;
     createdAt: string;
     updatedAt: string;
-  };
-  SubCategory: {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    categoryId: string;
   };
   // Computed fields for display purposes
   inStock: boolean;
@@ -67,12 +58,6 @@ export interface Group {
   description?: string;
 }
 
-export interface SubCategory {
-  id: string;
-  name: string;
-  description?: string;
-  categoryId?: string;
-}
 
 export interface SortOption {
   id: string;
@@ -120,7 +105,6 @@ export interface ApiProduct {
   imageUrl: string;
   categoryId: string;
   groupId: string;
-  subCategoryId: string;
   createdAt: string;
   updatedAt: string;
   Category: {
@@ -136,14 +120,6 @@ export interface ApiProduct {
     description: string;
     createdAt: string;
     updatedAt: string;
-  };
-  SubCategory: {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    categoryId: string;
   };
 }
 
@@ -163,7 +139,6 @@ export interface GetProductsParams {
   page?: number;
   limit?: number;
   category?: string;
-  subCategory?: string;
   search?: string;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';

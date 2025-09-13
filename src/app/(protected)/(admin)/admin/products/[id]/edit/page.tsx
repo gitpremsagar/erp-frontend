@@ -11,7 +11,6 @@ import { useSelector, useDispatch } from "react-redux"
 import { RootState, AppDispatch } from "@/redux/store"
 import { useEffect } from "react"
 import { fetchCategories } from "@/redux/slices/categoriesSlice"
-import { fetchSubCategories } from "@/redux/slices/subCategoriesSlice"
 import { fetchProductTags } from "@/redux/slices/productTagsSlice"
 
 import { Button } from "@/components/ui/button"
@@ -46,13 +45,11 @@ export default function EditProduct() {
 
   // Redux state
   const { categories, isLoading: categoriesLoading } = useSelector((state: RootState) => state.categories)
-  const { subCategories, isLoading: subCategoriesLoading } = useSelector((state: RootState) => state.subCategories)
   const { productTags, isLoading: tagsLoading } = useSelector((state: RootState) => state.productTags)
 
   // Fetch data on component mount
   useEffect(() => {
     dispatch(fetchCategories())
-    dispatch(fetchSubCategories())
     dispatch(fetchProductTags())
   }, [dispatch])
 
@@ -66,7 +63,6 @@ export default function EditProduct() {
       lowStockLimit: 0,
       overStockLimit: 0,
       categoryId: "",
-      subCategoryId: "",
       grammage: 0,
       imageUrl: "",
       tagIds: [],
@@ -85,7 +81,6 @@ export default function EditProduct() {
         lowStockLimit: product.lowStockLimit || 0,
         overStockLimit: product.overStockLimit || 0,
         categoryId: product.categoryId || "",
-        subCategoryId: product.subCategoryId || "",
         grammage: product.grammage || 0,
         imageUrl: product.imageUrl || "",
         tagIds: selectedTagIds,
@@ -358,37 +353,6 @@ export default function EditProduct() {
                       </Select>
                       <FormDescription>
                         Select the product category.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="subCategoryId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Sub-Category *</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a sub-category" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {subCategoriesLoading ? (
-                            <SelectItem value="loading" disabled>Loading sub-categories...</SelectItem>
-                          ) : (
-                            subCategories.map((subCategory) => (
-                              <SelectItem key={subCategory.id} value={subCategory.id}>
-                                {subCategory.name}
-                              </SelectItem>
-                            ))
-                          )}
-                        </SelectContent>
-                      </Select>
-                      <FormDescription>
-                        Select the product sub-category.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>

@@ -162,12 +162,10 @@ export default function OrderDetailsPage() {
       header: 'CATEGORY',
       cell: ({ row }) => {
         const category = row.original.Product.Category;
-        const subCategory = row.original.Product.SubCategory;
         const group = row.original.Product.Group;
         return (
           <div className="flex flex-col gap-1">
             <span className="font-medium">{category.name}</span>
-            <span className="text-sm text-gray-500">{subCategory.name}</span>
             <span className="text-xs text-gray-400">{group.name}</span>
           </div>
         );

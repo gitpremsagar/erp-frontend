@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import userReducer from "./slices/userSlice";
 import categoriesReducer from "./slices/categoriesSlice";
-import subCategoriesReducer from "./slices/subCategoriesSlice";
 import productTagsReducer from "./slices/productTagsSlice";
 
 const store = configureStore({
@@ -10,7 +9,6 @@ const store = configureStore({
         auth: authReducer,
         user: userReducer,
         categories: categoriesReducer,
-        subCategories: subCategoriesReducer,
         productTags: productTagsReducer,
     },
 });
