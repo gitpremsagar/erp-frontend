@@ -68,8 +68,13 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
               >
                 <Pencil className="w-4 h-4 text-gray-500 hover:text-gray-700" />
               </button>
-              <div>
-                <div className="text-sm font-medium text-gray-900">{product.name}</div>
+              <div className="flex-1">
+                <button
+                  onClick={() => router.push(`/admin/stock/${product.productCode}`)}
+                  className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors text-left"
+                >
+                  {product.name}
+                </button>
                 <div className="text-xs text-gray-500">{product.productCode}</div>
               </div>
             </div>
