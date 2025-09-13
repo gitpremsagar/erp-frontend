@@ -37,7 +37,6 @@ export interface OrderItem {
     imageUrl: string;
     categoryId: string;
     groupId: string;
-    subCategoryId: string;
     createdAt: string;
     updatedAt: string;
   };

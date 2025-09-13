@@ -25,7 +25,6 @@ export function useAdminProducts() {
         page: params.page || 1,
         limit: params.limit || 10,
         category: params.category === 'all' ? undefined : params.category,
-        subCategory: params.subCategory === 'all' ? undefined : params.subCategory,
         search: params.search || undefined,
         sortBy: params.sortBy || undefined,
         sortOrder: params.sortOrder || 'asc'

@@ -9,16 +9,13 @@ import {
 } from "./_components";
 import { useAdminProducts } from "@/hooks/products";
 import { useCategories } from "@/hooks/categories";
-import { useSubCategories } from "@/hooks/subCategories";
 import { useProductTags } from "@/hooks/productTags";
 
 export default function ProductsPage() {
   const { products, loading, error, pagination, refreshProducts, deleteProduct } = useAdminProducts();
   const { categories } = useCategories();
-  const { subCategories } = useSubCategories();
   const { productTags } = useProductTags();
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedSubCategory, setSelectedSubCategory] = useState('all');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Filter products based on filters
@@ -27,17 +24,15 @@ export default function ProductsPage() {
       const matchesCategory = selectedCategory === 'all' || 
         product.Category.id === selectedCategory;
       
-      const matchesSubCategory = selectedSubCategory === 'all' || 
-        product.SubCategory.id === selectedSubCategory;
 
       const matchesTags = selectedTags.length === 0 || 
         selectedTags.every(selectedTagId => 
           product.ProductTagRelation.some(tagRelation => tagRelation.ProductTag.id === selectedTagId)
         );
 
-      return matchesCategory && matchesSubCategory && matchesTags;
+      return matchesCategory && matchesTags;
     });
-  }, [products, selectedCategory, selectedSubCategory, selectedTags]);
+  }, [products, selectedCategory, selectedTags]);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
@@ -61,10 +56,8 @@ export default function ProductsPage() {
               <ProductsHeader />
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
-                onSubCategoryFilter={setSelectedSubCategory}
                 onTagFilter={setSelectedTags}
                 categories={categories}
-                subCategories={subCategories}
                 productTags={productTags}
               />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
@@ -90,10 +83,8 @@ export default function ProductsPage() {
               <ProductsHeader />
               <ProductsFilterAndActions
                 onCategoryFilter={setSelectedCategory}
-                onSubCategoryFilter={setSelectedSubCategory}
                 onTagFilter={setSelectedTags}
                 categories={categories}
-                subCategories={subCategories}
                 productTags={productTags}
               />
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
@@ -124,10 +115,8 @@ export default function ProductsPage() {
             <ProductsHeader />
             <ProductsFilterAndActions
               onCategoryFilter={setSelectedCategory}
-              onSubCategoryFilter={setSelectedSubCategory}
                 onTagFilter={setSelectedTags}
               categories={categories}
-              subCategories={subCategories}
               productTags={productTags}
             />
             <ProductsTable 

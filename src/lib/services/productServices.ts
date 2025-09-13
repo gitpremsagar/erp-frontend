@@ -10,7 +10,6 @@ export const productServices = {
       if (params.page) queryParams.append('page', params.page.toString());
       if (params.limit) queryParams.append('limit', params.limit.toString());
       if (params.category) queryParams.append('category', params.category);
-      if (params.subCategory) queryParams.append('subCategory', params.subCategory);
       if (params.search) queryParams.append('search', params.search);
       if (params.sortBy) queryParams.append('sortBy', params.sortBy);
       if (params.sortOrder) queryParams.append('sortOrder', params.sortOrder);
@@ -47,16 +46,6 @@ export const productServices = {
     }
   },
 
-  async getProductsBySubCategory(subCategory: string): Promise<ProductsResponse> {
-    try {
-      const url = API.PRODUCTS.GET_PRODUCT_BY_SUB_CATEGORY.replace(':subCategory', subCategory);
-      const response = await customAxios.get(url);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching products by sub-category:', error);
-      throw error;
-    }
-  },
 
   async createProduct(data: Partial<Product>): Promise<Product> {
     try {
