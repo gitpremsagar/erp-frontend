@@ -68,7 +68,8 @@ export default function StocksTable({ data, onUpdateStock }: StocksTableProps) {
         },
       },
       {
-        accessorKey: 'Stock',
+        accessorFn: (row) => row.Stock[0]?.stockQuantity || 0,
+        id: 'stockQuantity',
         header: ({ column }) => (
           <button
             className="flex items-center gap-1"
