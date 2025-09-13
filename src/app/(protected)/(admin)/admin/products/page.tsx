@@ -12,7 +12,7 @@ import { useCategories } from "@/hooks/categories";
 import { useProductTags } from "@/hooks/productTags";
 
 export default function ProductsPage() {
-  const { products, loading, error, pagination, refreshProducts, deleteProduct } = useAdminProducts();
+  const { products, loading, error, refreshProducts, deleteProduct } = useAdminProducts();
   const { categories } = useCategories();
   const { productTags } = useProductTags();
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -43,7 +43,7 @@ export default function ProductsPage() {
         console.error('Error deleting product:', error);
         
         // Check if the error response contains the specific message about existing orders
-        const errorMessage = (error as any)?.response?.data?.message;
+        const errorMessage = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
         if (errorMessage === "Cannot delete product as it is associated with existing orders") {
           alert('Cannot delete this product because it is associated with existing orders. Please remove the product from all orders before deleting.');
         } else {
