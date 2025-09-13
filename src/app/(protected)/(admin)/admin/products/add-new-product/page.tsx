@@ -60,8 +60,8 @@ export default function AddNewProduct() {
       lowStockLimit: 0,
       overStockLimit: 0,
       categoryId: "",
-      grammage: 0,
-      imageUrl: "",
+      grammage: 100, // Default grammage value
+      imageUrl: "https://via.placeholder.com/300x300?text=No+Image", // Default image URL
       tagIds: [],
     },
   })
@@ -144,7 +144,7 @@ export default function AddNewProduct() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                 <FormField
                   control={form.control}
                   name="mrp"
@@ -161,43 +161,6 @@ export default function AddNewProduct() {
                       </FormControl>
                       <FormDescription>
                         Maximum Retail Price of the product.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="grammage"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Grammage (g) *</FormLabel>
-                      <FormControl>
-                        <Input 
-                          type="number" 
-                          placeholder="Enter grammage" 
-                          {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Weight of the product in grams.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="imageUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Image URL *</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter image URL" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        URL of the product image.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
